@@ -360,7 +360,7 @@ For example:
 
 (define-condition decimal-parse-error (parse-error)
   nil
-  (:report "Illegal characters in string.")
+  (:report "Not a valid decimal number string.")
   (:documentation
    "Function PARSE-DECIMAL-NUMBER signals this condition when it couln't
 read a decimal number from string."))
@@ -407,12 +407,10 @@ Examples:
              (setf string (subseq string 1))))
 
       (if (and (every (lambda (item)
-                        (or (char<= #\0 item #\9)
+                        (or (digit-char-p item)
                             (char= item decimal-separator)))
                       string)
-               (some (lambda (item)
-                       (char<= #\0 item #\9))
-                     string)
+               (some #'digit-char-p string)
                (<= 0 (count decimal-separator string) 1))
 
           (let ((pos (position decimal-separator string)))
