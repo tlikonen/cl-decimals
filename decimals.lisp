@@ -288,7 +288,7 @@ NAME is the symbol that names the function. KEYWORD must be a valid
 keyword argument for the FORMAT-DECIMAL-NUMBER function (see its
 documentation for more information). FORM is evaluated and the value is
 used with the KEYWORD argument. Macro's side effect is that global
-function NAME is defined and it is suitable for the ~/ directive of
+function NAME is defined. It can be used with the ~/ directive of
 CL:FORMAT function.
 
 Example:
