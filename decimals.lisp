@@ -30,7 +30,7 @@ even integer when number is exactly between two integers. Examples:
 
 
 (defun divide-into-groups (string &key (separator #\Space) (from-end nil)
-                           (group-size 3))
+                           (group-digits 3))
 
   (setf separator (princ-to-string separator))
 
@@ -43,7 +43,7 @@ even integer when number is exactly between two integers. Examples:
                      for c across string
                      for i upfrom 1
                      do (vector-push-extend c result)
-                     if (and (zerop (rem i group-size))
+                     if (and (zerop (rem i group-digits))
                              (< i length))
                      do (loop for c across separator
                               do (vector-push-extend c result))
@@ -246,7 +246,7 @@ NIL
           integer (divide-into-groups
                    integer
                    :separator (or integer-group-separator "")
-                   :group-size integer-group-digits
+                   :group-digits integer-group-digits
                    :from-end t)
           fractional (divide-into-groups
                       (let ((diff (- (- (length fractional))
@@ -258,7 +258,7 @@ NIL
                                           diff :initial-element #\0))
                             fractional))
                       :separator (or fractional-group-separator "")
-                      :group-size fractional-group-digits
+                      :group-digits fractional-group-digits
                       :from-end nil))
 
     (values
