@@ -203,17 +203,17 @@ DECIMALS> (loop for e from -5 upto 5
                            :fractional-minimum-width 7
                            :fractional-group-separator \" \")))
 
-\"      0,000 01\" 
-\"      0,000 1 \" 
-\"      0,001   \" 
-\"      0,01    \" 
-\"      0,1     \" 
-\"      1       \" 
-\"     10       \" 
-\"    100       \" 
-\"  1 000       \" 
-\" 10 000       \" 
-\"100 000       \" 
+\"      0,000 01\"
+\"      0,000 1 \"
+\"      0,001   \"
+\"      0,01    \"
+\"      0,1     \"
+\"      1       \"
+\"     10       \"
+\"    100       \"
+\"  1 000       \"
+\" 10 000       \"
+\"100 000       \"
 NIL
 
 
@@ -223,13 +223,13 @@ DECIMALS> (loop for m from -3 upto 3
                            :integer-minimum-width 4
                            :fractional-minimum-width 4)))
 
-\" 666.667\" 
-\" 666.67 \" 
-\" 666.7  \" 
-\" 667    \" 
-\" 670    \" 
-\" 700    \" 
-\"1000    \" 
+\" 666.667\"
+\" 666.67 \"
+\" 666.7  \"
+\" 667    \"
+\" 670    \"
+\" 700    \"
+\"1000    \"
 NIL
 "
 
@@ -319,13 +319,13 @@ For example:
     (format nil \"~-2,3,4/my-formatter/\" 10/6)
     => \"  1,67 \"
 "
-  
+
   (let ((key-arg (gensym)))
     `(let ((,key-arg (list ,@(loop for (keyword value) in keyword-arguments
                                    do (assert (keywordp keyword) (keyword)
                                               "Keyword required.")
                                    collect keyword collect value))))
-       
+
        (defun ,name (stream number &optional colon-p at-sign-p
                      round-magnitude integer-minimum-width
                      fractional-minimum-width)
