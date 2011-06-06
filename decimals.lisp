@@ -359,8 +359,8 @@ For example:
   nil
   (:report "Not a valid decimal number string.")
   (:documentation
-   "Function PARSE-DECIMAL-NUMBER signals this condition when it couln't
-read a decimal number from string."))
+   "Function PARSE-DECIMAL-NUMBER signals this condition when it
+couldn't parse a decimal number from string."))
 
 
 (defun parse-decimal-number (string &key
