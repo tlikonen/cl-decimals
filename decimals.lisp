@@ -282,8 +282,8 @@ directive of CL:FORMAT. The valid format is this:
       (:KEYWORD FORM)
       ...)
 
-NAME is the symbol that names the function. KEYWORD should be a valid
-keyword argument for FORMAT-DECIMAL-NUMBER function (see its
+NAME is the symbol that names the function. KEYWORD must be a valid
+keyword argument for the FORMAT-DECIMAL-NUMBER function (see its
 documentation for more information). FORM is evaluated and the value is
 used with the KEYWORD argument. Macro's side effect is that global
 function NAME is defined and it is suitable for the ~/ directive of
@@ -307,8 +307,8 @@ Example:
     (format nil \"~/my-formatter/\" 100/8)
     => \"  12,500 000  \"
 
-The defined ~/ directive function call can optionally take three
-arguments to override the defaults:
+The ~/ directive function call can optionally take up to three arguments
+to override the defaults:
 
     ~round-magnitude,integer-minimum-width,fractional-minimum-width/FUNCTION/
 
