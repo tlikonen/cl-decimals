@@ -249,14 +249,13 @@ NIL
                    :group-digits integer-group-digits
                    :from-end t)
           fractional (divide-into-groups
-                      (let ((diff (- (- (length fractional))
-                                     round-magnitude)))
-                        (if (and show-trailing-zeros
-                                 (plusp diff))
-                            (concatenate 'string fractional
-                                         (make-string
-                                          diff :initial-element #\0))
-                            fractional))
+                      (if (and show-trailing-zeros
+                               (plusp (- (- (length fractional))
+                                         round-magnitude)))
+                          (replace (make-string (abs round-magnitude)
+                                                :initial-element #\0)
+                                   fractional)
+                          fractional)
                       :separator (or fractional-group-separator "")
                       :group-digits fractional-group-digits
                       :from-end nil))
