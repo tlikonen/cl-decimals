@@ -394,28 +394,29 @@ Examples:
     => -2469/200
 "
 
-  (setf string (string-trim '(#\Space) (subseq string start end)))
-  (when (plusp (length string))
-    (let ((sign 1))
-      (cond ((char= (aref string 0) negative-sign)
-             (setf sign -1
-                   string (subseq string 1)))
-            ((char= (aref string 0) positive-sign)
-             (setf string (subseq string 1))))
+  (setf string (string-trim " " (subseq string start end)))
+  (if (not (plusp (length string)))
+      (error 'decimal-parse-error)
+      (let ((sign 1))
+        (cond ((char= (aref string 0) negative-sign)
+               (setf sign -1
+                     string (subseq string 1)))
+              ((char= (aref string 0) positive-sign)
+               (setf string (subseq string 1))))
 
-      (if (and (every (lambda (item)
-                        (or (digit-char-p item)
-                            (char= item decimal-separator)))
-                      string)
-               (some #'digit-char-p string)
-               (<= 0 (count decimal-separator string) 1))
+        (if (and (every (lambda (item)
+                          (or (digit-char-p item)
+                              (char= item decimal-separator)))
+                        string)
+                 (some #'digit-char-p string)
+                 (<= 0 (count decimal-separator string) 1))
 
-          (let ((pos (position decimal-separator string)))
-            (* sign
-               (+ (or (number-string-to-integer (subseq string 0 pos))
-                      0)
-                  (if pos
-                      (number-string-to-fractional (subseq string (1+ pos)))
-                      0))))
+            (let ((pos (position decimal-separator string)))
+              (* sign
+                 (+ (or (number-string-to-integer (subseq string 0 pos))
+                        0)
+                    (if pos
+                        (number-string-to-fractional (subseq string (1+ pos)))
+                        0))))
 
-          (error 'decimal-parse-error)))))
+            (error 'decimal-parse-error)))))
