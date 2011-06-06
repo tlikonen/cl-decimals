@@ -83,13 +83,14 @@ even integer when number is exactly between two integers. Examples:
         (list sign (princ-to-string integer) fractional-string)))))
 
 
-(defun string-align (string width &key (left t) (char #\Space))
+(defun string-align (string width &key (side :left) (char #\Space))
   (if (>= (length string) width)
       string
       (let ((result (make-string width :initial-element char)))
-        (if left
-            (replace result string)
-            (replace result string :start1 (- width (length string)))))))
+        (ecase side
+          (:left (replace result string))
+          (:right (replace result string
+                           :start1 (- width (length string))))))))
 
 
 (defun format-decimal-number (number &key
@@ -265,12 +266,12 @@ NIL
       'string
       (string-align (concatenate 'string sign integer)
                     integer-minimum-width
-                    :left nil :char integer-pad-char)
+                    :side :right :char integer-pad-char)
       (string-align (if (plusp (length fractional))
                         (concatenate 'string decimal-separator fractional)
                         "")
                     fractional-minimum-width
-                    :left t :char fractional-pad-char))
+                    :side :left :char fractional-pad-char))
      (list sign integer decimal-separator fractional))))
 
 
