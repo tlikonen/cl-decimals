@@ -84,14 +84,11 @@ even integer when number is exactly between two integers. Examples:
 
 
 (defun string-align (string width &key (left t) (char #\Space))
-  (let ((diff (- width (length string))))
-    (if (plusp diff)
-        (if left
-            (concatenate
-             'string string (make-string diff :initial-element char))
-            (concatenate
-             'string (make-string diff :initial-element char) string))
-        string)))
+  (let* ((total-width (max width (length string)))
+         (result (make-string total-width :initial-element char)))
+    (if left
+        (replace result string)
+        (replace result string :start1 (- total-width (length string))))))
 
 
 (defun format-decimal-number (number &key
