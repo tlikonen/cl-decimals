@@ -23,7 +23,7 @@ Function: ROUND-HALF-AWAY-FROM-ZERO (number &optional divisor)
     A rounding function similar to CL:ROUND except that when number is
     exactly half-way between two integers round always away from zero.
 
-Macro: DEFINE-DECIMAL-FORMATTER (name &key keyword-arguments)
+Macro: DEFINE-DECIMAL-FORMATTER (name &body keyword-arguments)
 
     Define a decimal number formatter function suitable for the ~/
     directive of CL:FORMAT.
