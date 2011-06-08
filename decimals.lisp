@@ -54,9 +54,12 @@ even integer when number is exactly between two integers. Examples:
             (make-groups string separator)))))
 
 
-(defun decimal-integer-fractional (number &key
-                                   (round-magnitude 0)
-                                   (rounder #'round-half-away-from-zero))
+(defun decimal-round-split (number &key
+                            (round-magnitude 0)
+                            (rounder #'round-half-away-from-zero)
+                            (positive-sign #\+)
+                            (negative-sign #\-)
+                            (zero-sign nil))
 
   (assert (integerp round-magnitude) (round-magnitude)
           "ROUND-MAGNITUDE argument must be an integer.")
@@ -64,9 +67,9 @@ even integer when number is exactly between two integers. Examples:
   (let ((divisor (expt 10 round-magnitude)))
     (setf number (* divisor (funcall rounder number divisor))))
 
-  (let ((sign (cond ((plusp number) :positive)
-                    ((minusp number) :negative)
-                    (t :zero))))
+  (let ((sign (cond ((plusp number) (or positive-sign ""))
+                    ((minusp number) (or negative-sign ""))
+                    (t (or zero-sign "")))))
 
     (multiple-value-bind (integer fractional)
         (truncate (abs number))
@@ -81,7 +84,9 @@ even integer when number is exactly between two integers. Examples:
                        (truncate (* next 10)))
                      (princ next out)
                      (setf next remainder)))))
-        (list sign (princ-to-string integer) fractional-string)))))
+        (list (princ-to-string sign)
+              (princ-to-string integer)
+              fractional-string)))))
 
 
 (defun string-align (string width &key (side :left) (char #\Space))
@@ -244,17 +249,16 @@ NIL
 "
 
   (destructuring-bind (sign integer fractional)
-      (decimal-integer-fractional number :round-magnitude round-magnitude
-                                  :rounder rounder)
+      (decimal-round-split number
+                           :round-magnitude round-magnitude
+                           :rounder rounder
+                           :positive-sign positive-sign
+                           :negative-sign negative-sign
+                           :zero-sign zero-sign)
 
     (setf decimal-separator (if decimal-separator
                                 (princ-to-string decimal-separator)
                                 "")
-          sign (princ-to-string
-                (case sign
-                  (:positive (or positive-sign ""))
-                  (:negative (or negative-sign ""))
-                  (:zero (or zero-sign ""))))
           integer (divide-into-groups
                    integer
                    :separator (or integer-group-separator "")
