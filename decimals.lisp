@@ -161,15 +161,15 @@ FRACTIONAL-GROUP-SEPARATOR              nil
 INTEGER-GROUP-DIGITS                    3
 FRACTIONAL-GROUP-DIGITS                 3
 
-    The value is an integer defining the size of digit groups.
+    The value is an integer defining the number of digits in groups.
 
 INTEGER-MINIMUM-WIDTH                   0
 FRACTIONAL-MINIMUM-WIDTH                0
 
     Format integer or fractional part using minimum of this amount of
     characters, possibly using some padding characters (see below).
-    DECIMAL-SEPARATOR is included when calculating the width of
-    FRACTIONAL-MINIMUM-WIDTH.
+    DECIMAL-SEPARATOR is included when calculating the width of the
+    fractional part.
 
 INTEGER-PAD-CHAR                        #\\Space
 FRACTIONAL-PAD-CHAR                     #\\Space
@@ -181,8 +181,9 @@ POSITIVE-SIGN                           nil
 NEGATIVE-SIGN                           #\\-
 ZERO-SIGN                               nil
 
-    If non-nil these are used as the leading sign for positive, negative
-    and zero numbers. The PRINC output of the value is used.
+    If values are non-nil these are used as the leading sign for
+    positive, negative and zero numbers. The PRINC output of the value
+    is used.
 
 
 Examples
