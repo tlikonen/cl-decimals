@@ -144,10 +144,11 @@ SHOW-TRAILING-ZEROS                     nil
 
 ROUNDER                                 #'round-half-away-from-zero
 
-    The value must be a function and it is used to round number to
-    specified round magnitude. The function must work like CL:TRUNCATE,
-    CL:FLOOR, CL:CEILING and CL:ROUND, that is, take two arguments, a
-    number and a divisor, and return the quotient as the first value.
+    The value must be a function (or a symbol naming a function). It is
+    used to round the number to the specified round magnitude. The
+    function must work like CL:TRUNCATE, CL:FLOOR, CL:CEILING and
+    CL:ROUND, that is, take two arguments, a number and a divisor, and
+    return the quotient as the first value.
 
     This package introduces another rounding function,
     ROUND-HALF-AWAY-FROM-ZERO, which is used by default. See its
