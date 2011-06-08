@@ -237,7 +237,9 @@ NIL
       (decimal-integer-fractional number :round-magnitude round-magnitude
                                   :rounder rounder)
 
-    (setf decimal-separator (princ-to-string decimal-separator)
+    (setf decimal-separator (if decimal-separator
+                                (princ-to-string decimal-separator)
+                                "")
           sign (princ-to-string
                 (case sign
                   (:positive (or positive-sign ""))
