@@ -121,15 +121,15 @@ Formatting arguments INTEGER-MINIMUM-WIDTH and FRACTIONAL-MINIMUM-WIDTH
 do not apply to the second return value.
 
 NUMBER must be of type real. Formatting rules are specified with keyword
-arguments, as described below.
+arguments, as described below. The default value is in parentheses.
 
 
-ROUND-MAGNITUDE                         0
+ROUND-MAGNITUDE (0)
 
     This is the order of magnitude used for rounding. The value must be
     an integer and it is interpreted as a power of 10.
 
-SHOW-TRAILING-ZEROS                     nil
+SHOW-TRAILING-ZEROS (nil)
 
     If the value is non-nil print all trailing zeros in fractional part.
     Example:
@@ -142,7 +142,7 @@ SHOW-TRAILING-ZEROS                     nil
                                :show-trailing-zeros t)
         => \"0.200\"
 
-ROUNDER                                 #'round-half-away-from-zero
+ROUNDER (#'round-half-away-from-zero)
 
     The value must be a function (or a symbol naming a function). It is
     used to round the number to the specified round magnitude. The
@@ -154,41 +154,41 @@ ROUNDER                                 #'round-half-away-from-zero
     ROUND-HALF-AWAY-FROM-ZERO, which is used by default. See its
     documentation for more information.
 
-DECIMAL-SEPARATOR                       #\\.
+DECIMAL-SEPARATOR (#\\.)
 
     If the value is non-nil the PRINC output of the value will be added
     between integer and fractional parts. Probably the most useful types
     are character and string.
 
-INTEGER-GROUP-SEPARATOR                 nil
-FRACTIONAL-GROUP-SEPARATOR              nil
+INTEGER-GROUP-SEPARATOR    (nil)
+FRACTIONAL-GROUP-SEPARATOR (nil)
 
     If the value is non-nil the digits in integer or fractional parts
     are put in groups. The PRINC output of the value will be added
     between digit groups.
 
-INTEGER-GROUP-DIGITS                    3
-FRACTIONAL-GROUP-DIGITS                 3
+INTEGER-GROUP-DIGITS    (3)
+FRACTIONAL-GROUP-DIGITS (3)
 
     The value is an integer defining the number of digits in groups.
 
-INTEGER-MINIMUM-WIDTH                   0
-FRACTIONAL-MINIMUM-WIDTH                0
+INTEGER-MINIMUM-WIDTH    (0)
+FRACTIONAL-MINIMUM-WIDTH (0)
 
     Format integer or fractional part using minimum of this amount of
     characters, possibly using some padding characters (see below).
     DECIMAL-SEPARATOR is included when calculating the width of the
     fractional part.
 
-INTEGER-PAD-CHAR                        #\\Space
-FRACTIONAL-PAD-CHAR                     #\\Space
+INTEGER-PAD-CHAR    (#\\Space)
+FRACTIONAL-PAD-CHAR (#\\Space)
 
     The value is the padding character which is used to fill
     INTEGER-MINIMUM-WIDTH or FRACTIONAL-MINIMUM-WIDTH.
 
-POSITIVE-SIGN                           nil
-NEGATIVE-SIGN                           #\\-
-ZERO-SIGN                               nil
+POSITIVE-SIGN (nil)
+NEGATIVE-SIGN (#\\-)
+ZERO-SIGN     (nil)
 
     If values are non-nil these are used as the leading sign for
     positive, negative and zero numbers. The PRINC output of the value
