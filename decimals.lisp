@@ -111,10 +111,17 @@ even integer when number is exactly between two integers. Examples:
                               (zero-sign nil))
 
   "Apply specified decimal number formatting rules to NUMBER and return
-a formatted string. The second return value is a list of four strings:
-sign, integer part, decimal separator and fractional part. NUMBER must
-be of type real. Formatting rules are specified with keyword arguments,
-as described below. See also the examples at the end.
+a formatted string.
+
+The second return value is a list of formatted strings using the same
+rules but it separates the parts of the number. It's a list of four
+strings: sign, integer part, decimal separator and fractional part.
+Formatting arguments INTEGER-MINIMUM-WIDTH and FRACTIONAL-MINIMUM-WIDTH
+do not apply to the second return value.
+
+NUMBER must be of type real. Formatting rules are specified with keyword
+arguments, as described below.
+
 
 ROUND-MAGNITUDE                         0
 
@@ -138,8 +145,8 @@ ROUNDER                                 #'round-half-away-from-zero
 
     The value must be a function and it is used to round number to
     specified round magnitude. The function must work like CL:TRUNCATE,
-    CL:FLOOR, CL:CEILING and CL:ROUND, that is, take two arguments,
-    number and divisor, and return the quotient as the first value.
+    CL:FLOOR, CL:CEILING and CL:ROUND, that is, take two arguments, a
+    number and a divisor, and return the quotient as the first value.
 
     This package introduces another rounding function,
     ROUND-HALF-AWAY-FROM-ZERO, which is used by default. See its
