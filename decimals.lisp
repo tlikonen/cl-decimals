@@ -74,6 +74,7 @@ even integer when number is exactly between two integers. Examples:
              (with-output-to-string (out)
                (loop with next = fractional
                      with remainder
+                     for count from 1 upto (abs round-magnitude)
                      until (zerop next)
                      do
                      (multiple-value-setq (next remainder)
