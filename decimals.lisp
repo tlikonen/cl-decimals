@@ -185,7 +185,7 @@ ZERO-SIGN                               nil
     and zero numbers. The PRINC output of the value is used.
 
 
-EXAMPLES
+Examples
 ========
 
 
