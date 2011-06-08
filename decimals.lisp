@@ -72,14 +72,14 @@ even integer when number is exactly between two integers. Examples:
         (truncate (abs number))
       (let ((fractional-string
              (with-output-to-string (out)
-               (loop with digit = fractional
-                     with remainder = 0
-                     until (integerp digit)
+               (loop with next = fractional
+                     with remainder
+                     until (zerop next)
                      do
-                     (multiple-value-setq (digit remainder)
-                       (truncate (* digit 10)))
-                     (princ digit out)
-                     (setf digit remainder)))))
+                     (multiple-value-setq (next remainder)
+                       (truncate (* next 10)))
+                     (princ next out)
+                     (setf next remainder)))))
         (list sign (princ-to-string integer) fractional-string)))))
 
 
