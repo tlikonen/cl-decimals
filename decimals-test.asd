@@ -4,4 +4,4 @@
   :licence "Public Domain"
   :serial t
   :components ((:file "decimals")
-               (:file "test")))
+               (:file "decimals-test")))
