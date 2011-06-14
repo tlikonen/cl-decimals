@@ -12,21 +12,25 @@
 (defun round-half-away-from-zero (number &optional (divisor 1))
 
   "Divide NUMBER by DIVISOR and round the result to the nearest integer.
-If the result is half-way between two integers round away from zero.
+If the result is half-way between two integers round away from zero. Two
+values are returned: quotient and remainder.
 
 This is similar to CL:ROUND function except that CL:ROUND rounds to an
 even integer when number is exactly between two integers. Examples:
 
-  (round-half-away-from-zero 3/2) => 2     (round 3/2) => 2
-  (round-half-away-from-zero 5/2) => 3     (round 5/2) => 2
+    (round-half-away-from-zero 3/2) => 2, -1/2
+    (round 3/2)                     => 2, -1/2
+
+    (round-half-away-from-zero 5/2) => 3, -1/2
+    (round 5/2)                     => 2, 1/2
 "
 
   (if (zerop number)
       (values 0 0)
-      (let ((value (if (plusp number)
-                       (floor (+ (/ number divisor) 1/2))
-                       (ceiling (- (/ number divisor) 1/2)))))
-        (values value (- number value)))))
+      (let ((quotient (if (plusp number)
+                          (floor (+ (/ number divisor) 1/2))
+                          (ceiling (- (/ number divisor) 1/2)))))
+        (values quotient (- number (* quotient divisor))))))
 
 
 (defun divide-into-groups (string &key (separator #\Space) (from-end nil)
