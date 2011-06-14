@@ -64,8 +64,8 @@
              (3/2 1 2 -1/2)
              (-3/2 1 -2 1/2)
              (5/2 1 3 -1/2)
-             (30/2 10 2 -5)
-             (-50/2 10 -3 5)
+             (15 10 2 -5)
+             (-25 10 -3 5)
              (0 1 0 0))
         always (equal (multiple-value-list
                        (decimals:round-half-away-from-zero number divisor))
