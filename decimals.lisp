@@ -369,11 +369,11 @@ For example:
 
 
 (defun number-string-to-fractional (string)
-  (loop for i = 1/10 then (/ i 10)
-        for c across string
-        for digit = (digit-char-p c)
-        if digit sum (* i digit)
-        else return nil))
+  (when (every #'digit-char-p string)
+    (setf string (string-right-trim "0" string))
+    (handler-case (/ (parse-integer string)
+                     (expt 10 (length string)))
+      (parse-error () nil))))
 
 
 (define-condition decimal-parse-error (parse-error)
@@ -437,7 +437,9 @@ Examples:
                  (+ (or (number-string-to-integer (subseq string 0 pos))
                         0)
                     (if pos
-                        (number-string-to-fractional (subseq string (1+ pos)))
+                        (or (number-string-to-fractional
+                             (subseq string (1+ pos)))
+                            0)
                         0))))
 
             (error 'decimal-parse-error)))))
