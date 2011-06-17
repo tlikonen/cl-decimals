@@ -36,6 +36,11 @@ even integer when number is exactly between two integers. Examples:
 (defun divide-into-groups (string &key (separator #\Space) (from-end nil)
                            (group-digits 3))
 
+  (assert (and (integerp group-digits)
+               (plusp group-digits))
+          (group-digits)
+          "The GROUP-DIGITS argument must be a positive integer")
+
   (setf separator (princ-to-string separator))
 
   (if (zerop (length separator))
@@ -179,7 +184,8 @@ FRACTIONAL-GROUP-SEPARATOR (nil)
 INTEGER-GROUP-DIGITS    (3)
 FRACTIONAL-GROUP-DIGITS (3)
 
-    The value is an integer defining the number of digits in groups.
+    The value is a positive integer defining the number of digits in
+    groups.
 
 INTEGER-MINIMUM-WIDTH    (0)
 FRACTIONAL-MINIMUM-WIDTH (0)
