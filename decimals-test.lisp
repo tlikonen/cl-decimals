@@ -75,64 +75,61 @@
 
 
 
-(defun format-decimal-magnitude ()
-  (equal '("666.667" "666.67" "666.7" "667" "670" "700" "1000")
-         (loop for m from -3 upto 3
+(defun format-decimal-round-magnitude ()
+  (equal '("666.6667" "666.667" "666.67" "666.7" "667" "670" "700" "1000" "0")
+         (loop for m from -4 upto 4
                collect (decimals:format-decimal-number
                         2000/3 :round-magnitude m))))
 
 
-(defun format-decimal-pp ()
-  (equal '("        0,000 000 1"
-           "        0,000 001  "
-           "        0,000 01   "
-           "        0,000 1    "
-           "        0,001      "
-           "        0,01       "
-           "        0,1        "
-           "        1          "
-           "       10          "
-           "      100          "
-           "    1 000          "
-           "   10 000          "
-           "  100 000          "
-           "1 000 000          ")
-
-         (loop for e from -7 upto 6
-               collect (decimals:format-decimal-number
-                        (expt 10 e) :round-magnitude -7
-                        :decimal-separator ","
-                        :integer-minimum-width 9
-                        :integer-group-separator " "
-                        :fractional-minimum-width 10
-                        :fractional-group-separator " "))))
-
-
-(defun format-decimal-pp-trailing-zeros ()
-  (equal '("        +0,000 001"
-           "        +0,000 010"
-           "        +0,000 100"
-           "        +0,001 000"
-           "        +0,010 000"
-           "        +0,100 000"
-           "        +1,000 000"
-           "       +10,000 000"
-           "      +100,000 000"
-           "    +1 000,000 000"
-           "   +10 000,000 000"
-           "  +100 000,000 000"
-           "+1 000 000,000 000")
+(defun format-decimal-align ()
+  (equal '("      0.000001"
+           "      0.00001 "
+           "      0.0001  "
+           "      0.001   "
+           "      0.01    "
+           "      0.1     "
+           "      1       "
+           "     10       "
+           "    100       "
+           "   1000       "
+           "  10000       "
+           " 100000       "
+           "1000000       ")
 
          (loop for e from -6 upto 6
                collect (decimals:format-decimal-number
                         (expt 10 e) :round-magnitude -6
+                        :integer-minimum-width 7
+                        :fractional-minimum-width 7))))
+
+
+(defun format-decimal-trailing-zeros ()
+  (equal '("0,001" "0,010" "0,100" "1,000")
+         (loop for e from -3 upto 0
+               collect (decimals:format-decimal-number
+                        (expt 10 e) :round-magnitude -3
                         :decimal-separator ","
-                        :show-trailing-zeros t
-                        :integer-minimum-width 10
-                        :integer-group-separator " "
-                        :fractional-minimum-width 8
-                        :fractional-group-separator " "
-                        :positive-sign "+"))))
+                        :show-trailing-zeros t))))
+
+
+(defun format-decimal-padding ()
+  (equal '("<<<0.001"
+           "<<<0.01>"
+           "<<<0.1>>"
+           "<<<1>>>>"
+           "<<10>>>>"
+           "<100>>>>"
+           "1000>>>>")
+
+         (loop for e from -3 upto 3
+               collect (decimals:format-decimal-number
+                        (expt 10 e)
+                        :round-magnitude -3
+                        :integer-minimum-width 4
+                        :integer-pad-char #\<
+                        :fractional-minimum-width 4
+                        :fractional-pad-char #\>))))
 
 
 (defun format-decimal-signs ()
@@ -145,15 +142,15 @@
                         :zero-sign "zero"))))
 
 
-(defun format-decimal-separators ()
-  (equal '("9<9<9<0<0<0<0<0<0<0*0>0>0>0>0>0>0>0>0>0"
-           "99<90<00<00<00*00>00>00>00>00"
-           "9<990<000<000*000>000>000>0"
-           "99<9000<0000*0000>0000>00"
-           "99900<00000*00000>00000")
+(defun format-decimal-digit-groups ()
+  (equal '("1<2<3<4<5<6<7<8<9<0*0>0>0>0>0>0>0>0>0>0"
+           "12<34<56<78<90*00>00>00>00>00"
+           "1<234<567<890*000>000>000>0"
+           "12<3456<7890*0000>0000>00"
+           "12345<67890*00000>00000")
          (loop for digits from 1 upto 5
                collect (decimals:format-decimal-number
-                        9990000000
+                        1234567890
                         :round-magnitude -10
                         :decimal-separator "*"
                         :integer-group-digits digits
@@ -186,9 +183,10 @@
     (rounding)
     (parse-decimal)
     (parse-decimal-illegal)
-    (format-decimal-magnitude)
-    (format-decimal-pp)
-    (format-decimal-pp-trailing-zeros)
+    (format-decimal-round-magnitude)
+    (format-decimal-align)
+    (format-decimal-trailing-zeros)
+    (format-decimal-padding)
     (format-decimal-signs)
-    (format-decimal-separators)
+    (format-decimal-digit-groups)
     (custom-formatter)))
