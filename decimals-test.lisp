@@ -19,27 +19,28 @@
        ,totalv)))
 
 
-(defun parse-decimal-default ()
-  (loop for (in . out) in '((" 12.34 " . 617/50)
-                            ("-12.34  " . -617/50)
-                            ("  +12.34" . 617/50)
-                            ("  .34 " . 17/50)
-                            ("  +.34" . 17/50)
-                            ("  -.34" . -17/50)
-                            ("  34." . 34)
-                            (" +34." . 34)
-                            ("34." . 34)
-                            ("0" . 0)
-                            ("00100.00100" . 100001/1000))
-        always (= (decimals:parse-decimal-number in) out)))
-
-
-(defun parse-decimal-special ()
-  (loop for (in out . options) in '((" 12,34" 617/50 :decimal-separator #\,)
-                                    ("–12.34" -617/50 :negative-sign #\–
-                                     :decimal-separator #\.)
-                                    ("+0" 0 :positive-sign #\+)
-                                    ("5d2" 26/5 :decimal-separator #\d))
+(defun parse-decimal ()
+  (loop for (in out . options)
+        in '(("1234567890" 1234567890)
+             (" 12.34 " 617/50)
+             ("-12.34  " -617/50)
+             ("  +12.34" 617/50)
+             ("  .34 " 17/50)
+             ("  +.34" 17/50)
+             ("  -.34" -17/50)
+             ("  34." 34)
+             (" +34." 34)
+             ("34." 34)
+             ("0" 0)
+             ("+0" 0 :positive-sign #\+)
+             ("0.2" 1/5)
+             (".2" 1/5)
+             ("+3." 3)
+             ("-7 " -7)
+             ("00100.00100" 100001/1000)
+             ("−12,345" -2469/200 :decimal-separator #\, :negative-sign #\−)
+             (" 12,34" 617/50 :decimal-separator #\,)
+             ("5d2" 26/5 :decimal-separator #\d))
         always (= (apply #'decimals:parse-decimal-number in options) out)))
 
 
@@ -82,27 +83,28 @@
 
 
 (defun format-decimal-pp ()
-  (equal '("        0,000 001"
-           "        0,000 01 "
-           "        0,000 1  "
-           "        0,001    "
-           "        0,01     "
-           "        0,1      "
-           "        1        "
-           "       10        "
-           "      100        "
-           "    1 000        "
-           "   10 000        "
-           "  100 000        "
-           "1 000 000        ")
+  (equal '("        0,000 000 1"
+           "        0,000 001  "
+           "        0,000 01   "
+           "        0,000 1    "
+           "        0,001      "
+           "        0,01       "
+           "        0,1        "
+           "        1          "
+           "       10          "
+           "      100          "
+           "    1 000          "
+           "   10 000          "
+           "  100 000          "
+           "1 000 000          ")
 
-         (loop for e from -6 upto 6
+         (loop for e from -7 upto 6
                collect (decimals:format-decimal-number
-                        (expt 10 e) :round-magnitude -6
+                        (expt 10 e) :round-magnitude -7
                         :decimal-separator ","
                         :integer-minimum-width 9
                         :integer-group-separator " "
-                        :fractional-minimum-width 8
+                        :fractional-minimum-width 10
                         :fractional-group-separator " "))))
 
 
@@ -133,6 +135,34 @@
                         :positive-sign "+"))))
 
 
+(defun format-decimal-signs ()
+  (equal '("plus1" "zero0" "minus1")
+         (loop for number in '(1 0 -1)
+               collect (decimals:format-decimal-number
+                        number
+                        :positive-sign "plus"
+                        :negative-sign "minus"
+                        :zero-sign "zero"))))
+
+
+(defun format-decimal-separators ()
+  (equal '("9<9<9<0<0<0<0<0<0<0*0>0>0>0>0>0>0>0>0>0"
+           "99<90<00<00<00*00>00>00>00>00"
+           "9<990<000<000*000>000>000>0"
+           "99<9000<0000*0000>0000>00"
+           "99900<00000*00000>00000")
+         (loop for digits from 1 upto 5
+               collect (decimals:format-decimal-number
+                        9990000000
+                        :round-magnitude -10
+                        :decimal-separator "*"
+                        :integer-group-digits digits
+                        :integer-group-separator "<"
+                        :fractional-group-digits digits
+                        :fractional-group-separator ">"
+                        :show-trailing-zeros t))))
+
+
 (decimals:define-decimal-formatter test-formatter
   (:round-magnitude -6)
   (:decimal-separator ",")
@@ -154,10 +184,11 @@
 (defun run-tests ()
   (check
     (rounding)
-    (parse-decimal-default)
-    (parse-decimal-special)
+    (parse-decimal)
     (parse-decimal-illegal)
     (format-decimal-magnitude)
     (format-decimal-pp)
     (format-decimal-pp-trailing-zeros)
+    (format-decimal-signs)
+    (format-decimal-separators)
     (custom-formatter)))
