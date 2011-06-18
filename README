@@ -31,7 +31,7 @@ Function: FORMAT-DECIMAL-NUMBER (number &key ...)
     ("" "6 666" "," "667")
 
 
-Function: ROUND-HALF-AWAY-FROM-ZERO (number &optional divisor)
+Function: ROUND-HALF-AWAY-FROM-ZERO (number &optional (divisor 1))
 
     A rounding function similar to CL:ROUND except that when number is
     exactly half-way between two integers round always away from zero.
