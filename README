@@ -11,7 +11,7 @@ own documentation for complete description. Here's a short introduction.
 
 Function: PARSE-DECIMAL-NUMBER (string &key ...)
 
-    Examines a string for a decimal number and return it as a rational
+    Examine a string for a decimal number and return it as a rational
     number.
 
     DECIMALS> (parse-decimal-number "12,34" :decimal-separator #\,)
