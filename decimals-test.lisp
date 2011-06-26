@@ -40,7 +40,11 @@
              ("00100.00100" 100001/1000)
              ("−12,345" -2469/200 :decimal-separator #\, :negative-sign #\−)
              (" 12,34" 617/50 :decimal-separator #\,)
-             ("5d2" 26/5 :decimal-separator #\d))
+             ("5d2" 26/5 :decimal-separator #\d)
+             ("502" 26/5 :decimal-separator #\0)
+             ("502" 26/5 :decimal-separator #\0 :negative-sign #\2)
+             ("2502" 26/5 :decimal-separator #\0 :positive-sign #\2)
+             ("2502" -26/5 :decimal-separator #\0 :negative-sign #\2))
         always (= (apply #'decimals:parse-decimal-number in options) out)))
 
 
