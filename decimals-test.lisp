@@ -76,10 +76,19 @@
 
 
 (defun format-decimal-round-magnitude ()
-  (equal '("666.6667" "666.667" "666.67" "666.7" "667" "670" "700" "1000" "0")
+  (equal '(("666.6667" ("" "666" "." "6667"))
+           ("666.667" ("" "666" "." "667"))
+           ("666.67" ("" "666" "." "67"))
+           ("666.7" ("" "666" "." "7"))
+           ("667" ("" "667" "." ""))
+           ("670" ("" "670" "." ""))
+           ("700" ("" "700" "." ""))
+           ("1000" ("" "1000" "." ""))
+           ("0" ("" "0" "." "")))
          (loop for m from -4 upto 4
-               collect (decimals:format-decimal-number
-                        2000/3 :round-magnitude m))))
+               collect (multiple-value-list
+                        (decimals:format-decimal-number
+                         2000/3 :round-magnitude m)))))
 
 
 (defun format-decimal-align ()
