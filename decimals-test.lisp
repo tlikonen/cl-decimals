@@ -53,6 +53,7 @@
   (loop for (input . options) in '(("abc")
                                    ("")
                                    (".")
+                                   ("12.34.")
                                    ("12,34")
                                    ("12.34" :decimal-separator #\,)
                                    ("--23")
