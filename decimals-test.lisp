@@ -45,7 +45,8 @@
              ("502" 26/5 :decimal-separator #\0 :negative-sign #\2)
              ("2502" 26/5 :decimal-separator #\0 :positive-sign #\2)
              ("2502" -26/5 :decimal-separator #\0 :negative-sign #\2))
-        always (= (apply #'decimals:parse-decimal-number in options) out)))
+        always (ignore-errors
+                 (= (apply #'decimals:parse-decimal-number in options) out))))
 
 
 (defun parse-decimal-illegal ()
