@@ -83,81 +83,96 @@
 
 
 (defun format-decimal-align ()
-  (equal '("      0.000001"
-           "      0.00001 "
-           "      0.0001  "
-           "      0.001   "
-           "      0.01    "
-           "      0.1     "
-           "      1       "
-           "     10       "
-           "    100       "
-           "   1000       "
-           "  10000       "
-           " 100000       "
-           "1000000       ")
+  (equal '(("      0.000001" ("" "0" "." "000001"))
+           ("      0.00001 " ("" "0" "." "00001"))
+           ("      0.0001  " ("" "0" "." "0001"))
+           ("      0.001   " ("" "0" "." "001"))
+           ("      0.01    " ("" "0" "." "01"))
+           ("      0.1     " ("" "0" "." "1"))
+           ("      1       " ("" "1" "." ""))
+           ("     10       " ("" "10" "." ""))
+           ("    100       " ("" "100" "." ""))
+           ("   1000       " ("" "1000" "." ""))
+           ("  10000       " ("" "10000" "." ""))
+           (" 100000       " ("" "100000" "." ""))
+           ("1000000       " ("" "1000000" "." "")))
 
-         (loop for e from -6 upto 6
-               collect (decimals:format-decimal-number
-                        (expt 10 e) :round-magnitude -6
-                        :integer-minimum-width 7
-                        :fractional-minimum-width 7))))
+           (loop for e from -6 upto 6
+                 collect (multiple-value-list
+                          (decimals:format-decimal-number
+                           (expt 10 e) :round-magnitude -6
+                           :integer-minimum-width 7
+                           :fractional-minimum-width 7)))))
 
 
 (defun format-decimal-trailing-zeros ()
-  (equal '("0,001" "0,010" "0,100" "1,000")
+  (equal '(("0,001" ("" "0" "," "001"))
+           ("0,010" ("" "0" "," "010"))
+           ("0,100" ("" "0" "," "100"))
+           ("1,000" ("" "1" "," "000")))
          (loop for e from -3 upto 0
-               collect (decimals:format-decimal-number
-                        (expt 10 e) :round-magnitude -3
-                        :decimal-separator ","
-                        :show-trailing-zeros t))))
+               collect (multiple-value-list
+                        (decimals:format-decimal-number
+                         (expt 10 e) :round-magnitude -3
+                         :decimal-separator ","
+                         :show-trailing-zeros t)))))
 
 
 (defun format-decimal-padding ()
-  (equal '("<<<0.001"
-           "<<<0.01>"
-           "<<<0.1>>"
-           "<<<1>>>>"
-           "<<10>>>>"
-           "<100>>>>"
-           "1000>>>>")
+  (equal '(("<<<0.001" ("" "0" "." "001"))
+           ("<<<0.01>" ("" "0" "." "01"))
+           ("<<<0.1>>" ("" "0" "." "1"))
+           ("<<<1>>>>" ("" "1" "." ""))
+           ("<<10>>>>" ("" "10" "." ""))
+           ("<100>>>>" ("" "100" "." ""))
+           ("1000>>>>" ("" "1000" "." "")))
 
          (loop for e from -3 upto 3
-               collect (decimals:format-decimal-number
-                        (expt 10 e)
-                        :round-magnitude -3
-                        :integer-minimum-width 4
-                        :integer-pad-char #\<
-                        :fractional-minimum-width 4
-                        :fractional-pad-char #\>))))
+               collect (multiple-value-list
+                        (decimals:format-decimal-number
+                         (expt 10 e)
+                         :round-magnitude -3
+                         :integer-minimum-width 4
+                         :integer-pad-char #\<
+                         :fractional-minimum-width 4
+                         :fractional-pad-char #\>)))))
 
 
 (defun format-decimal-signs ()
-  (equal '("plus1" "zero0" "minus1")
+  (equal '(("plus1" ("plus" "1" "." ""))
+           ("zero0" ("zero" "0" "." ""))
+           ("minus1" ("minus" "1" "." "")))
          (loop for number in '(1 0 -1)
-               collect (decimals:format-decimal-number
-                        number
-                        :positive-sign "plus"
-                        :negative-sign "minus"
-                        :zero-sign "zero"))))
+               collect (multiple-value-list
+                        (decimals:format-decimal-number
+                         number
+                         :positive-sign "plus"
+                         :negative-sign "minus"
+                         :zero-sign "zero")))))
 
 
 (defun format-decimal-digit-groups ()
-  (equal '("1<2<3<4<5<6<7<8<9<0*0>0>0>0>0>0>0>0>0>0"
-           "12<34<56<78<90*00>00>00>00>00"
-           "1<234<567<890*000>000>000>0"
-           "12<3456<7890*0000>0000>00"
-           "12345<67890*00000>00000")
+  (equal '(("1<2<3<4<5<6<7<8<9<0*0>0>0>0>0>0>0>0>0>0"
+            ("" "1<2<3<4<5<6<7<8<9<0" "*" "0>0>0>0>0>0>0>0>0>0"))
+           ("12<34<56<78<90*00>00>00>00>00"
+            ("" "12<34<56<78<90" "*" "00>00>00>00>00"))
+           ("1<234<567<890*000>000>000>0"
+            ("" "1<234<567<890" "*" "000>000>000>0"))
+           ("12<3456<7890*0000>0000>00"
+            ("" "12<3456<7890" "*" "0000>0000>00"))
+           ("12345<67890*00000>00000"
+            ("" "12345<67890" "*" "00000>00000")))
          (loop for digits from 1 upto 5
-               collect (decimals:format-decimal-number
-                        1234567890
-                        :round-magnitude -10
-                        :decimal-separator "*"
-                        :integer-group-digits digits
-                        :integer-group-separator "<"
-                        :fractional-group-digits digits
-                        :fractional-group-separator ">"
-                        :show-trailing-zeros t))))
+               collect (multiple-value-list
+                        (decimals:format-decimal-number
+                         1234567890
+                         :round-magnitude -10
+                         :decimal-separator "*"
+                         :integer-group-digits digits
+                         :integer-group-separator "<"
+                         :fractional-group-digits digits
+                         :fractional-group-separator ">"
+                         :show-trailing-zeros t)))))
 
 
 (decimals:define-decimal-formatter test-formatter
