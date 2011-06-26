@@ -138,14 +138,16 @@
                          :fractional-pad-char #\>)))))
 
 
-(defun format-decimal-signs ()
-  (equal '(("plus1" ("plus" "1" "." ""))
-           ("zero0" ("zero" "0" "." ""))
-           ("minus1" ("minus" "1" "." "")))
+(defun format-decimal-padding-signs ()
+  (equal '(("...plus1" ("plus" "1" "." ""))
+           ("...zero0" ("zero" "0" "." ""))
+           ("..minus1" ("minus" "1" "." "")))
          (loop for number in '(1 0 -1)
                collect (multiple-value-list
                         (decimals:format-decimal-number
                          number
+                         :integer-minimum-width 8
+                         :integer-pad-char #\.
                          :positive-sign "plus"
                          :negative-sign "minus"
                          :zero-sign "zero")))))
@@ -202,6 +204,6 @@
     (format-decimal-align)
     (format-decimal-trailing-zeros)
     (format-decimal-padding)
-    (format-decimal-signs)
+    (format-decimal-padding-signs)
     (format-decimal-digit-groups)
     (custom-formatter)))
