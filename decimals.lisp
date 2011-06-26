@@ -89,8 +89,7 @@ even integer when number is exactly between two integers. Examples:
                      repeat (abs round-magnitude)
                      until (zerop next)
                      do
-                     (multiple-value-setq (next remainder)
-                       (truncate (* next 10)))
+                     (setf (values next remainder) (truncate (* next 10)))
                      (princ next out)
                      (setf next remainder)))))
         (list (princ-to-string sign)
