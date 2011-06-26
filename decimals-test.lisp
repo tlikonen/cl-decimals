@@ -60,8 +60,8 @@
                       'decimals:decimal-parse-error)))
 
 
-(defun rounding ()
-  (loop for (number divisor output1 output2)
+(defun rounding-function ()
+  (loop for (number divisor quotient remainder)
         in '((1/2 1 1 -1/2)
              (3/2 1 2 -1/2)
              (-3/2 1 -2 1/2)
@@ -71,8 +71,7 @@
              (0 1 0 0))
         always (equal (multiple-value-list
                        (decimals:round-half-away-from-zero number divisor))
-                      (list output1 output2))))
-
+                      (list quotient remainder))))
 
 
 (defun format-decimal-round-magnitude ()
@@ -206,7 +205,7 @@
 
 (defun run-tests ()
   (check
-    (rounding)
+    (rounding-function)
     (parse-decimal)
     (parse-decimal-illegal)
     (format-decimal-round-magnitude)
