@@ -35,6 +35,7 @@ Function: ROUND-HALF-AWAY-FROM-ZERO (number &optional (divisor 1))
 
     A rounding function similar to CL:ROUND except that when number is
     exactly half-way between two integers round always away from zero.
+    FORMAT-DECIMAL-NUMBER uses this rounding function by default.
 
 
 Macro: DEFINE-DECIMAL-FORMATTER (name &body keyword-arguments)
