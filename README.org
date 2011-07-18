@@ -1,0 +1,45 @@
+* Decimals
+
+*A decimal number parser and formatting package for Common Lisp*
+
+Author:  Teemu Likonen <tlikonen@iki.fi>
+
+License: Public Domain
+
+This package introduces three public functions and one macro. See their
+own documentation for complete description. Here's a short introduction.
+
+** Function: =parse-decimal-number (string &key ...)=
+
+Examine /string/ for a decimal number and return it as a rational
+number.
+
+#+BEGIN_EXAMPLE
+  DECIMALS> (parse-decimal-number "12,34" :decimal-separator #\,)
+  617/50
+#+END_EXAMPLE
+
+** Function: =FORMAT-DECIMAL-NUMBER (NUMBER &key ...)=
+
+Apply specified decimal number formatting rules to a number and return a
+formatted string.
+
+#+BEGIN_EXAMPLE
+  DECIMALS> (format-decimal-number 20000/3 :round-magnitude -3
+                                   :decimal-separator ","
+                                   :integer-group-separator " "
+                                   :integer-minimum-width 7)
+  "  6 666,667"
+  ("" "6 666" "," "667")
+#+END_EXAMPLE
+
+** Function: =round-half-away-from-zero (number &optional (divisor 1))=
+
+A rounding function similar to =cl:round= except that when /number/ is
+exactly half-way between two integers round always away from zero.
+=format-decimal-number= uses this rounding function by default.
+
+** Macro: =DEFINE-DECIMAL-FORMATTER (name &body keyword-arguments)=
+
+Define a custom decimal number formatter function suitable for the
+=~/= directive of =cl:format=.
