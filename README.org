@@ -2,9 +2,17 @@
 
 *A decimal number parser and formatting package for Common Lisp*
 
+** Author and license
+
 Author:  Teemu Likonen <tlikonen@iki.fi>
 
-License: Public Domain
+License: Public domain
+
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+** Introduction
 
 This package introduces three public functions and one macro. See their
 own documentation for complete description. Here's a short introduction.

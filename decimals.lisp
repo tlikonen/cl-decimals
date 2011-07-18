@@ -1,3 +1,15 @@
+;;; DECIMALS
+;;
+;; A decimal number parser and formatting package for Common Lisp.
+;;
+;; Author: Teemu Likonen <tlikonen@iki.fi>
+;;
+;; License: Public domain
+;;
+;; This program is distributed in the hope that it will be useful, but
+;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
 (defpackage :decimals
   (:use :cl)
   (:export :round-half-away-from-zero
