@@ -27,7 +27,7 @@ number.
   617/50
 #+END_EXAMPLE
 
-*** Function: =FORMAT-DECIMAL-NUMBER (NUMBER &key ...)=
+*** Function: =format-decimal-number (number &key ...)=
 
 Apply specified decimal number formatting rules to a number and return a
 formatted string.
@@ -47,7 +47,7 @@ A rounding function similar to =cl:round= except that when /number/ is
 exactly half-way between two integers round always away from zero.
 =format-decimal-number= uses this rounding function by default.
 
-*** Macro: =DEFINE-DECIMAL-FORMATTER (name &body keyword-arguments)=
+*** Macro: =define-decimal-formatter (name &body keyword-arguments)=
 
 Define a custom decimal number formatter function suitable for the
 =~/= directive of =cl:format=.
