@@ -1,8 +1,8 @@
-(defpackage :decimals-test
-  (:use :cl)
-  (:export :run-tests))
+(defpackage #:decimals-test
+  (:use #:cl)
+  (:export #:run-tests))
 
-(in-package :decimals-test)
+(in-package #:decimals-test)
 
 
 (defun report (name form)

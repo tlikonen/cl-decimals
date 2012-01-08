@@ -10,15 +10,15 @@
 ;; WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-(defpackage :decimals
-  (:use :cl)
-  (:export :round-half-away-from-zero
-           :format-decimal-number
-           :parse-decimal-number
-           :decimal-parse-error
-           :define-decimal-formatter))
+(defpackage #:decimals
+  (:use #:cl)
+  (:export #:round-half-away-from-zero
+           #:format-decimal-number
+           #:parse-decimal-number
+           #:decimal-parse-error
+           #:define-decimal-formatter))
 
-(in-package :decimals)
+(in-package #:decimals)
 
 
 (defun round-half-away-from-zero (number &optional (divisor 1))
