@@ -203,6 +203,8 @@ FRACTIONAL-MINIMUM-WIDTH (0)
 
     Format integer or fractional part using minimum of this amount of
     characters, possibly using some padding characters (see below).
+    POSITIVE-SIGN, NEGATIVE-SIGN or ZERO-SIGN (see below) is included
+    when calculating the width of the integer part. Similarly
     DECIMAL-SEPARATOR is included when calculating the width of the
     fractional part.
 
