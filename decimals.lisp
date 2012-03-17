@@ -58,17 +58,17 @@ even integer when number is exactly between two integers. Examples:
   (if (zerop (length separator))
       string
       (flet ((make-groups (string separator)
-               (loop with length = (length string)
-                     with result = (make-array length :element-type 'character
-                                               :fill-pointer 0 :adjustable t)
-                     for c across string
-                     for i upfrom 1
-                     do (vector-push-extend c result)
-                     if (and (zerop (rem i group-digits))
-                             (< i length))
-                     do (loop for c across separator
-                              do (vector-push-extend c result))
-                     finally (return result))))
+               (loop :with length := (length string)
+                     :with result := (make-array length :element-type 'character
+                                                 :fill-pointer 0 :adjustable t)
+                     :for c :across string
+                     :for i :upfrom 1
+                     :do (vector-push-extend c result)
+                     :if (and (zerop (rem i group-digits))
+                              (< i length))
+                     :do (loop :for c :across separator
+                               :do (vector-push-extend c result))
+                     :finally (return result))))
 
         (if from-end
             (nreverse (make-groups (reverse string) (reverse separator)))
@@ -96,11 +96,11 @@ even integer when number is exactly between two integers. Examples:
         (truncate (abs number))
       (let ((fractional-string
              (with-output-to-string (out)
-               (loop with next = fractional
-                     with remainder
-                     repeat (abs round-magnitude)
-                     until (zerop next)
-                     do
+               (loop :with next := fractional
+                     :with remainder
+                     :repeat (abs round-magnitude)
+                     :until (zerop next)
+                     :do
                      (setf (values next remainder) (truncate (* next 10)))
                      (princ next out)
                      (setf next remainder)))))
@@ -357,10 +357,10 @@ For example:
 "
 
   (let ((key-arg (gensym)))
-    `(let ((,key-arg (list ,@(loop for (keyword value) in keyword-arguments
-                                   do (assert (keywordp keyword) (keyword)
-                                              "Keyword required.")
-                                   collect keyword collect value))))
+    `(let ((,key-arg (list ,@(loop :for (keyword value) :in keyword-arguments
+                                   :do (assert (keywordp keyword) (keyword)
+                                               "Keyword required.")
+                                   :collect keyword :collect value))))
 
        (defun ,name (stream number &optional colon-p at-sign-p
                      round-magnitude integer-minimum-width
