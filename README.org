@@ -22,6 +22,8 @@ own documentation for complete description. Here's a short introduction.
 Examine /string/ for a decimal number and return it as a rational
 number.
 
+**** Examples
+
 #+BEGIN_EXAMPLE
   DECIMALS> (parse-decimal-number "12,34" :decimal-separator #\,)
   617/50
@@ -41,6 +43,8 @@ number.
 
 Apply specified decimal number formatting rules to a number and return a
 formatted string.
+
+**** Examples
 
 #+BEGIN_EXAMPLE
   DECIMALS> (format-decimal-number 20000/3 :round-magnitude -3
