@@ -27,6 +27,16 @@ number.
   617/50
 #+END_EXAMPLE
 
+**** Keyword arguments and their default values
+
+#+BEGIN_EXAMPLE
+  :decimal-separator  #\.
+  :positive-sign      #\+
+  :negative-sign      #\-
+  :start              0
+  :end                nil
+#+END_EXAMPLE
+
 *** Function: =format-decimal-number (number &key ...)=
 
 Apply specified decimal number formatting rules to a number and return a
@@ -63,6 +73,26 @@ formatted string.
   " 10 000       "
   "100 000       "
   NIL
+#+END_EXAMPLE
+
+**** Keyword arguments and their default values
+
+#+BEGIN_EXAMPLE
+  :round-magnitude             0
+  :rounder                     #'round-half-away-from-zero
+  :decimal-separator           #\.
+  :integer-group-separator     nil
+  :integer-group-digits        3
+  :integer-minimum-width       0
+  :integer-pad-char            #\space
+  :fractional-group-separator  nil
+  :fractional-group-digits     3
+  :fractional-minimum-width    0
+  :fractional-pad-char         #\space
+  :show-trailing-zeros         nil
+  :positive-sign               nil
+  :zero-sign                   nil
+  :negative-sign               #\-
 #+END_EXAMPLE
 
 *** Function: =round-half-away-from-zero (number &optional (divisor 1))=
