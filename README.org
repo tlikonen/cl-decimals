@@ -41,7 +41,7 @@ number.
 
 *** Function: =format-decimal-number (number &key ...)=
 
-Apply specified decimal number formatting rules to a number and return a
+Apply specified decimal number formatting rules to /number/ and return a
 formatted string.
 
 **** Examples
