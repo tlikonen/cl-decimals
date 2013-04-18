@@ -29,13 +29,13 @@ Examine _string_ for a decimal number and return it as a rational
 number.
 
 
-**Examples**
+*Examples*
 
     DECIMALS> (parse-decimal-number "12,34" :decimal-separator #\,)
     617/50
 
 
-**Keyword arguments and their default values**
+*Keyword arguments and their default values*
 
     :decimal-separator  #\.
     :positive-sign      #\+
@@ -50,7 +50,7 @@ Apply specified decimal number formatting rules to _number_ and return a
 formatted string.
 
 
-**Examples**
+*Examples*
 
     DECIMALS> (format-decimal-number 20000/3 :round-magnitude -3
                                      :decimal-separator ","
@@ -83,7 +83,7 @@ formatted string.
     NIL
 
 
-**Keyword arguments and their default values**
+*Keyword arguments and their default values*
 
     :round-magnitude             0
     :rounder                     #'round-half-away-from-zero
