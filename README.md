@@ -7,7 +7,7 @@ Decimals
 Author and license
 ------------------
 
-Author:  Teemu Likonen <tlikonen@iki.fi>
+Author:  Teemu Likonen <<tlikonen@iki.fi>>
 
 License: Public domain
 
