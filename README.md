@@ -25,7 +25,7 @@ own documentation for complete description. Here's a short introduction.
 
 ### Function: `parse-decimal-number (string &key ...)`
 
-Examine /string/ for a decimal number and return it as a rational
+Examine _string_ for a decimal number and return it as a rational
 number.
 
 
@@ -46,7 +46,7 @@ number.
 
 ### Function: `format-decimal-number (number &key ...)`
 
-Apply specified decimal number formatting rules to /number/ and return a
+Apply specified decimal number formatting rules to _number_ and return a
 formatted string.
 
 
@@ -104,7 +104,7 @@ formatted string.
 
 ### Function: `round-half-away-from-zero (number &optional (divisor 1))`
 
-A rounding function similar to `cl:round` except that when /number/ is
+A rounding function similar to `cl:round` except that when _number_ is
 exactly half-way between two integers round always away from zero.
 `format-decimal-number` uses this rounding function by default.
 
