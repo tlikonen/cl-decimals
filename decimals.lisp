@@ -23,19 +23,18 @@
 
 (defun round-half-away-from-zero (number &optional (divisor 1))
 
-  "Divide NUMBER by DIVISOR and round the result to the nearest integer.
+  "Divide `number` by `divisor` and round the result to the nearest integer.
 If the result is half-way between two integers round away from zero. Two
 values are returned: quotient and remainder.
 
-This is similar to CL:ROUND function except that CL:ROUND rounds to an
-even integer when number is exactly between two integers. Examples:
+This is similar to `cl:round` function except that `cl:round` rounds to
+an even integer when number is exactly between two integers. Examples:
 
     (round-half-away-from-zero 3/2) => 2, -1/2
     (round 3/2)                     => 2, -1/2
 
     (round-half-away-from-zero 5/2) => 3, -1/2
-    (round 5/2)                     => 2, 1/2
-"
+    (round 5/2)                     => 2, 1/2"
 
   (if (zerop number)
       (values 0 0)
@@ -136,28 +135,28 @@ even integer when number is exactly between two integers. Examples:
                               (negative-sign #\-)
                               (zero-sign nil))
 
-  "Apply specified decimal number formatting rules to NUMBER and return
-a formatted string.
+  "Apply specified decimal number formatting rules to `number` and
+return a formatted string.
 
 The second return value is a list of formatted strings using the same
 rules but it separates the parts of the number. It's a list of four
 strings: sign, integer part, decimal separator and fractional part.
-Formatting arguments INTEGER-MINIMUM-WIDTH and FRACTIONAL-MINIMUM-WIDTH
-do not apply to the second return value.
+Formatting arguments `integer-minimum-width` and
+`fractional-minimum-width` do not apply to the second return value.
 
-NUMBER must be of type real. Formatting rules are specified with keyword
-arguments, as described below. The default value is in parentheses.
+`number` must be of type real. Formatting rules are specified with
+keyword arguments, as described below. The default value is in
+parentheses.
 
-
-ROUND-MAGNITUDE (0)
+  * `round-magnitude (0)`
 
     This is the order of magnitude used for rounding. The value must be
     an integer and it is interpreted as a power of 10.
 
-SHOW-TRAILING-ZEROS (nil)
+  * `show-trailing-zeros (nil)`
 
     If the value is non-nil print all trailing zeros in fractional part.
-    Example:
+    Examples:
 
         (format-decimal-number 1/5 :round-magnitude -3
                                :show-trailing-zeros nil)
@@ -167,109 +166,60 @@ SHOW-TRAILING-ZEROS (nil)
                                :show-trailing-zeros t)
         => \"0.200\"
 
-ROUNDER (#'round-half-away-from-zero)
+  * `rounder (#'round-half-away-from-zero)`
 
     The value must be a function (or a symbol naming a function). It is
     used to round the number to the specified round magnitude. The
-    function must work like CL:TRUNCATE, CL:FLOOR, CL:CEILING and
-    CL:ROUND, that is, take two arguments, a number and a divisor, and
+    function must work like `cl:truncate`, `cl:floor`, `cl:ceiling` and
+    `cl:round`, that is, take two arguments, a number and a divisor, and
     return the quotient as the first value.
 
     This package introduces another rounding function,
-    ROUND-HALF-AWAY-FROM-ZERO, which is used by default. See its
+    `round-half-away-from-zero`, which is used by default. See its
     documentation for more information.
 
-DECIMAL-SEPARATOR (#\\.)
+  * `decimal-separator (#\\.)`
 
-    If the value is non-nil the PRINC output of the value will be added
-    between integer and fractional parts. Probably the most useful types
-    are character and string.
+    If the value is non-nil the `princ` output of the value will be
+    added between integer and fractional parts. Probably the most useful
+    types are character and string.
 
-INTEGER-GROUP-SEPARATOR    (nil)
-FRACTIONAL-GROUP-SEPARATOR (nil)
+  * `integer-group-separator    (nil)`
+  * `fractional-group-separator (nil)`
 
     If the value is non-nil the digits in integer or fractional parts
-    are put in groups. The PRINC output of the value will be added
+    are put in groups. The `princ` output of the value will be added
     between digit groups.
 
-INTEGER-GROUP-DIGITS    (3)
-FRACTIONAL-GROUP-DIGITS (3)
+  * `integer-group-digits    (3)`
+  * `fractional-group-digits (3)`
 
     The value is a positive integer defining the number of digits in
     groups.
 
-INTEGER-MINIMUM-WIDTH    (0)
-FRACTIONAL-MINIMUM-WIDTH (0)
+  * `integer-minimum-width    (0)`
+  * `fractional-minimum-width (0)`
 
     Format integer or fractional part using minimum of this amount of
     characters, possibly using some padding characters (see below).
-    POSITIVE-SIGN, NEGATIVE-SIGN or ZERO-SIGN (see below) is included
-    when calculating the width of the integer part. Similarly
-    DECIMAL-SEPARATOR is included when calculating the width of the
+    `positive-sign`, `negative-sign` or `zero-sign` (see below) is
+    included when calculating the width of the integer part. Similarly
+    `decimal-separator` is included when calculating the width of the
     fractional part.
 
-INTEGER-PAD-CHAR    (#\\Space)
-FRACTIONAL-PAD-CHAR (#\\Space)
+  * `integer-pad-char    (#\\Space)`
+  * `fractional-pad-char (#\\Space)`
 
     The value is the padding character which is used to fill
-    INTEGER-MINIMUM-WIDTH or FRACTIONAL-MINIMUM-WIDTH.
+    `integer-minimum-width` or `fractional-minimum-width`.
 
-POSITIVE-SIGN (nil)
-NEGATIVE-SIGN (#\\-)
-ZERO-SIGN     (nil)
+  * `positive-sign (nil)`
+  * `negative-sign (#\\-)`
+  * `zero-sign     (nil)`
 
     If values are non-nil these are used as the leading sign for
-    positive, negative and zero numbers. The PRINC output of the value
-    is used.
-
-
-Examples
-========
-
-
-DECIMALS> (format-decimal-number -100/6 :round-magnitude -3)
-\"-16.667\"
-\(\"-\" \"16\" \".\" \"667\")
-
-
-DECIMALS> (loop for e from -5 upto 5
-                do (print (format-decimal-number
-                           (expt 10 e) :round-magnitude -5
-                           :decimal-separator \",\"
-                           :integer-minimum-width 7
-                           :integer-group-separator \" \"
-                           :fractional-minimum-width 7
-                           :fractional-group-separator \" \")))
-
-\"      0,000 01\"
-\"      0,000 1 \"
-\"      0,001   \"
-\"      0,01    \"
-\"      0,1     \"
-\"      1       \"
-\"     10       \"
-\"    100       \"
-\"  1 000       \"
-\" 10 000       \"
-\"100 000       \"
-NIL
-
-
-DECIMALS> (loop for m from -3 upto 3
-                do (print (format-decimal-number
-                           2000/3 :round-magnitude m
-                           :integer-minimum-width 4
-                           :fractional-minimum-width 4)))
-
-\" 666.667\"
-\" 666.67 \"
-\" 666.7  \"
-\" 667    \"
-\" 670    \"
-\" 700    \"
-\"1000    \"
-NIL
-"
+    positive, negative and zero numbers. The `princ` output of the value
+    is used."
 
   (destructuring-bind (sign integer fractional)
       (decimal-round-split number
@@ -316,20 +266,20 @@ NIL
 (defmacro define-decimal-formatter (name &body keyword-arguments)
 
   "Define a decimal number formatter function to use with the ~/
-directive of CL:FORMAT. The valid format is this:
+directive of `cl:format`. The valid format is this:
 
-    (define-decimal-formatter NAME
-      (:KEYWORD FORM)
+    (define-decimal-formatter name
+      (:keyword form)
       ...)
 
-NAME is the symbol that names the function. KEYWORD must be a valid
-keyword argument for the FORMAT-DECIMAL-NUMBER function (see its
-documentation for more information). FORM is evaluated and the value is
-used with the KEYWORD argument. Macro's side effect is that global
-function NAME is defined. It can be used with the ~/ directive of
-CL:FORMAT function.
+`name` is the symbol that names the function. `keyword` must be a valid
+keyword argument for the `format-decimal-number` function (see its
+documentation for more information). `form` is evaluated and the value
+is used with the `keyword` argument. Macro's side effect is that global
+function `name` is defined. It can be used with the `~/` directive of
+`cl:format` function.
 
-Example:
+Examples:
 
     (define-decimal-formatter my-formatter
       (:round-magnitude -6)
@@ -347,16 +297,15 @@ Example:
     (format nil \"~/my-formatter/\" 100/8)
     => \"  12,500 000  \"
 
-The ~/ directive function call can optionally take up to three arguments
-to override the defaults:
+The `~/` directive function call can optionally take up to three
+arguments to override the defaults:
 
     ~round-magnitude,integer-minimum-width,fractional-minimum-width/FUNCTION/
 
 For example:
 
     (format nil \"~-2,3,4/my-formatter/\" 10/6)
-    => \"  1,67 \"
-"
+    => \"  1,67 \""
 
   (let ((key-arg (gensym)))
     `(let ((,key-arg (list ,@(loop :for (keyword value) :in keyword-arguments
@@ -399,7 +348,7 @@ For example:
   nil
   (:report "Not a valid decimal number string.")
   (:documentation
-   "Function PARSE-DECIMAL-NUMBER signals this condition when it
+   "Function `parse-decimal-number` signals this condition when it
 couldn't parse a decimal number from string."))
 
 
@@ -409,18 +358,18 @@ couldn't parse a decimal number from string."))
                              (negative-sign #\-)
                              (start 0) (end nil))
 
-  "Examine STRING (or its substring from START to END) for a decimal
-number. Assume that the decimal number is exact and return it as a
-rational number.
+  "Examine `string` (or its substring from `start` to `end`) for a
+decimal number. Assume that the decimal number is exact and return it as
+a rational number.
 
-Rules for parsing: First all leading and trailing #\\Space characters
-are stripped. The resulting string may start with a POSITIVE-SIGN or a
-NEGATIVE-SIGN character. The latter causes this function to assume a
+Rules for parsing: First all leading and trailing `#\\Space` characters
+are stripped. The resulting string may start with a `positive-sign` or a
+`negative-sign` character. The latter causes this function to assume a
 negative number. The following characters in the string must include one
-or more digit characters and it may include one DECIMAL-SEPARATOR
+or more digit characters and it may include one `decimal-separator`
 character which separates integer and fractional parts. All other
-characters are illegal. If these rules are not met a DECIMAL-PARSE-ERROR
-condition is signaled.
+characters are illegal. If these rules are not met a
+`decimal-parse-error` condition is signaled.
 
 Examples:
 
@@ -431,8 +380,7 @@ Examples:
 
     (parse-decimal-number \"−12,345\"
                           :decimal-separator #\\, :negative-sign #\\−)
-    => -2469/200
-"
+    => -2469/200"
 
   (setf string (string-trim " " (subseq string start end)))
   (if (not (plusp (length string)))
