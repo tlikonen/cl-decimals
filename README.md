@@ -106,11 +106,11 @@ directive of `cl:format`. The valid format is this:
       (:keyword form)
       ...)
 
-`name` is the symbol that names the function. `keyword` must be a valid
+_Name_ is the symbol that names the function. _Keyword_ must be a valid
 keyword argument for the `format-decimal-number` function (see its
-documentation for more information). `form` is evaluated and the value
-is used with the `keyword` argument. Macro's side effect is that global
-function `name` is defined. It can be used with the `~/` directive of
+documentation for more information). _Form_ is evaluated and the value
+is used with the _keyword_ argument. Macro's side effect is that global
+function _name_ is defined. It can be used with the `~/` directive of
 `cl:format` function.
 
 Examples:
@@ -155,16 +155,16 @@ The lambda list:
       (show-trailing-zeros nil) (positive-sign nil) (negative-sign #\-)
       (zero-sign nil))
 
-Apply specified decimal number formatting rules to `number` and
+Apply specified decimal number formatting rules to _number_ and
 return a formatted string.
 
 The second return value is a list of formatted strings using the same
 rules but it separates the parts of the number. It's a list of four
 strings: sign, integer part, decimal separator and fractional part.
-Formatting arguments `integer-minimum-width` and
-`fractional-minimum-width` do not apply to the second return value.
+Formatting arguments _integer-minimum-width_ and
+_fractional-minimum-width_ do not apply to the second return value.
 
-`number` must be of type real. Formatting rules are specified with
+_Number_ must be of type real. Formatting rules are specified with
 keyword arguments, as described below. The default value is in
 parentheses.
 
@@ -195,7 +195,7 @@ parentheses.
     return the quotient as the first value.
 
     This package introduces another rounding function,
-    `round-half-away-from-zero`, which is used by default. See its
+    _round-half-away-from-zero_, which is used by default. See its
     documentation for more information.
 
   * `decimal-separator (#\.)`
@@ -222,16 +222,16 @@ parentheses.
 
     Format integer or fractional part using minimum of this amount of
     characters, possibly using some padding characters (see below).
-    `positive-sign`, `negative-sign` or `zero-sign` (see below) is
+    _positive-sign_, _negative-sign_ or _zero-sign_ (see below) is
     included when calculating the width of the integer part. Similarly
-    `decimal-separator` is included when calculating the width of the
+    _decimal-separator_ is included when calculating the width of the
     fractional part.
 
   * `integer-pad-char    (#\Space)`
   * `fractional-pad-char (#\Space)`
 
     The value is the padding character which is used to fill
-    `integer-minimum-width` or `fractional-minimum-width`.
+    _integer-minimum-width_ or _fractional-minimum-width_.
 
   * `positive-sign (nil)`
   * `negative-sign (#\-)`
@@ -249,15 +249,15 @@ The lambda list:
      (string &key (decimal-separator #\.) (positive-sign #\+)
              (negative-sign #\-) (start 0) (end nil))
 
-Examine `string` (or its substring from `start` to `end`) for a
+Examine _string_ (or its substring from _start_ to _end_) for a
 decimal number. Assume that the decimal number is exact and return it as
 a rational number.
 
 Rules for parsing: First all leading and trailing `#\Space` characters
-are stripped. The resulting string may start with a `positive-sign` or a
-`negative-sign` character. The latter causes this function to assume a
+are stripped. The resulting string may start with a _positive-sign_ or a
+_negative-sign_ character. The latter causes this function to assume a
 negative number. The following characters in the string must include one
-or more digit characters and it may include one `decimal-separator`
+or more digit characters and it may include one _decimal-separator_
 character which separates integer and fractional parts. All other
 characters are illegal. If these rules are not met a
 `decimal-parse-error` condition is signaled.
@@ -280,7 +280,7 @@ The lambda list:
 
      (number &optional (divisor 1))
 
-Divide `number` by `divisor` and round the result to the nearest integer.
+Divide _number_ by _divisor_ and round the result to the nearest integer.
 If the result is half-way between two integers round away from zero. Two
 values are returned: quotient and remainder.
 
