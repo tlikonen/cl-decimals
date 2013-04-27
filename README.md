@@ -11,8 +11,10 @@ This Common Lisp package offers functions for parsing and formatting
 decimal numbers. Package's main interface are functions
 `parse-decimal-number` and `format-decimal-number`. The former is for
 parsing strings for decimal numbers and the latter for pretty-printing
-them as strings. The public programming interface is described below in
-detail. Here are some examples:
+them as strings. See _Interface (API)_ for the full documentation of the
+public programming interface. Here are some examples.
+
+### Parsing
 
     DECIMALS> (parse-decimal-number "0.24")
     6/25
@@ -23,6 +25,8 @@ detail. Here are some examples:
                                     :negative-sign #\−)
     => -2469/200
 
+
+### Formatting
 
     DECIMALS> (format-decimal-number -100/6 :round-magnitude -3)
     "-16.667"
