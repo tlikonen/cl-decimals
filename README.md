@@ -99,7 +99,7 @@ The lambda list:
 
      (name &body keyword-arguments)
 
-Define a decimal number formatter function to use with the ~/
+Define a decimal number formatter function to use with the `~/´
 directive of `cl:format`. The valid format is this:
 
     (define-decimal-formatter name
