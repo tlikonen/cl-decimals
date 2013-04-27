@@ -23,7 +23,7 @@ public programming interface. Here are some examples.
     DECIMALS> (parse-decimal-number "−12,345"
                                     :decimal-separator #\,
                                     :negative-sign #\−)
-    => -2469/200
+    -2469/200
 
 
 ### Formatting
