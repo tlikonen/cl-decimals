@@ -135,30 +135,29 @@ Interface (API)
   (format stream *head*)
   (loop :with *package* := (find-package package)
         :with *print-right-margin* := 72
+        :with *print-case* := :downcase
         :with symbols := (sort (loop :for symbol
                                      :being :each :external-symbol :in package
                                      :collect symbol)
                                #'string-lessp :key #'symbol-name)
 
         :for (symbol type doc) :in (mapcan #'symbol-doc-type symbols)
-        :for name := (string-downcase (symbol-name symbol))
-        :if doc
-        :do
+        :if doc :do
         (format stream "~A" prefix)
         (case type
           (:function
-           (format stream "Function: `~A`" name)
+           (format stream "Function: `~A`" symbol)
            (let ((ll (sb-introspect:function-lambda-list symbol)))
              (when ll
-               (format stream "~%~%The lambda list:~%~%     ~(~S~)" ll))))
+               (format stream "~%~%The lambda list:~%~%     ~S" ll))))
           (:macro
-           (format stream "Macro: `~A`" name)
+           (format stream "Macro: `~A`" symbol)
            (let ((ll (sb-introspect:function-lambda-list symbol)))
              (when ll
-               (format stream "~%~%The lambda list:~%~%     ~(~S~)" ll))))
-          (:variable (format stream "Variable: `~A`" name))
-          (:condition (format stream "Condition: `~A`" name))
-          (:class (format stream "Class: `~A`" name)))
+               (format stream "~%~%The lambda list:~%~%     ~S" ll))))
+          (:variable (format stream "Variable: `~A`" symbol))
+          (:condition (format stream "Condition: `~A`" symbol))
+          (:class (format stream "Class: `~A`" symbol)))
         (format stream "~%~%~A~%~%~%" doc)))
 
 
