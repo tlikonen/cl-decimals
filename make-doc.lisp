@@ -167,4 +167,6 @@ Interface (API)
 (with-output-to-string (*standard-output*)
   (ql:quickload "decimals"))
 
-(print-doc "DECIMALS")
+(handler-case (print-doc "DECIMALS")
+  (error (c)
+    (format *error-output* "~A~%" c)))
