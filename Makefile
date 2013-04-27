@@ -3,7 +3,7 @@ SBCL := sbcl
 DOC := README
 
 $(DOC).md: decimals.lisp $(MAKE_DOC)
-	$(SBCL) --noinform --no-userinit --load $(MAKE_DOC) --quit >$@
+	$(SBCL) --script $(MAKE_DOC) >$@
 
 $(DOC).html: $(DOC).md
 	markdown $< >$@
