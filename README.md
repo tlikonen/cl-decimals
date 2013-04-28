@@ -270,7 +270,8 @@ Examples:
     (parse-decimal-number " -7 ") => -7
 
     (parse-decimal-number "−12,345"
-                          :decimal-separator #\, :negative-sign #\−)
+                          :decimal-separator #\,
+                          :negative-sign #\−)
     => -2469/200
 
 
