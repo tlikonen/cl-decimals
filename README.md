@@ -164,7 +164,7 @@ strings: sign, integer part, decimal separator and fractional part.
 Formatting arguments _integer-minimum-width_ and
 _fractional-minimum-width_ do not apply to the second return value.
 
-_Number_ must be of type real. Formatting rules are specified with
+_Number_ must be of type `real`. Formatting rules are specified with
 keyword arguments, as described below. The default value is in
 parentheses.
 
@@ -202,7 +202,7 @@ parentheses.
 
     If the value is non-nil the `princ` output of the value will be
     added between integer and fractional parts. Probably the most useful
-    types are character and string.
+    types are `character` and `string`.
 
   * `integer-group-separator    (nil)`
   * `fractional-group-separator (nil)`
