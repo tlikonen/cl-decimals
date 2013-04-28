@@ -158,11 +158,11 @@ The lambda list:
 Apply specified decimal number formatting rules to _number_ and
 return a formatted string.
 
-The second return value is a list of formatted strings using the same
-rules but it separates the parts of the number. It's a list of four
-strings: sign, integer part, decimal separator and fractional part.
-Formatting arguments _integer-minimum-width_ and
-_fractional-minimum-width_ do not apply to the second return value.
+The second return value is (almost) the same formatted string divided
+into four strings. It's a list of four strings: sign, integer part,
+decimal separator and fractional part. Formatting arguments
+_integer-minimum-width_ and _fractional-minimum-width_ do not apply to
+the second return value. Everything else does.
 
 _Number_ must be of type `real`. Formatting rules are specified with
 keyword arguments, as described below. The default value is in
