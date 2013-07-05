@@ -175,7 +175,7 @@ parentheses.
     return the quotient as the first value.
 
     This package introduces another rounding function,
-    _round-half-away-from-zero_, which is used by default. See its
+    `round-half-away-from-zero`, which is used by default. See its
     documentation for more information.
 
   * `decimal-separator (#\\.)`
