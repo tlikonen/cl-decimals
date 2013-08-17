@@ -14,6 +14,7 @@ parsing strings for decimal numbers and the latter for pretty-printing
 them as strings. See _Interface (API)_ for the full documentation of the
 public programming interface. Here are some examples.
 
+
 ### Parsing
 
     DECIMALS> (parse-decimal-number "0.24")
@@ -164,9 +165,12 @@ decimal separator and fractional part. Formatting arguments
 _integer-minimum-width_ and _fractional-minimum-width_ do not apply to
 the second return value. Everything else does.
 
-_Number_ must be of type `real`. Formatting rules are specified with
-keyword arguments, as described below. The default value is in
-parentheses.
+_Number_ must be of type `real`. This function uses `rational` types
+internally. If the given _number_ is a `float` it is first turned into
+`rational` by calling `cl:rational`.
+
+Formatting rules are specified with keyword arguments, as described
+below. The default value is in parentheses.
 
   * `round-magnitude (0)`
 

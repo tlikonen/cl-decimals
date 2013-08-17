@@ -56,6 +56,7 @@ parsing strings for decimal numbers and the latter for pretty-printing
 them as strings. See _Interface (API)_ for the full documentation of the
 public programming interface. Here are some examples.
 
+
 ### Parsing
 
     DECIMALS> (parse-decimal-number \"0.24\")

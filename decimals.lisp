@@ -84,6 +84,9 @@ an even integer when number is exactly between two integers. Examples:
   (assert (integerp round-magnitude) (round-magnitude)
           "ROUND-MAGNITUDE argument must be an integer.")
 
+  (when (floatp number)
+    (setf number (rational number)))
+
   (let ((divisor (expt 10 round-magnitude)))
     (setf number (* divisor (funcall rounder number divisor))))
 
@@ -144,9 +147,12 @@ decimal separator and fractional part. Formatting arguments
 _integer-minimum-width_ and _fractional-minimum-width_ do not apply to
 the second return value. Everything else does.
 
-_Number_ must be of type `real`. Formatting rules are specified with
-keyword arguments, as described below. The default value is in
-parentheses.
+_Number_ must be of type `real`. This function uses `rational` types
+internally. If the given _number_ is a `float` it is first turned into
+`rational` by calling `cl:rational`.
+
+Formatting rules are specified with keyword arguments, as described
+below. The default value is in parentheses.
 
   * `round-magnitude (0)`
 
