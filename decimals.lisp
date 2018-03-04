@@ -402,8 +402,9 @@ Examples:
 	      (if subseq-include-sign
 		  (subseq string 1)
 		  (subseq string (1+ start) (when end (1+ end))))
-	      (unless subseq-include-sign
-		(subseq string start end))))
+	      (if subseq-include-sign
+		  string
+		  (subseq string start end))))
 
     (if (and (every (lambda (item)
 		      (or (digit-char-p item)
