@@ -270,6 +270,12 @@ character which separates integer and fractional parts. All other
 characters are illegal. If these rules are not met a
 `decimal-parse-error` condition is signaled.
 
+_subseq-include-sign_ controls the effect of _start_ and _end_, such
+that if `T`, sign characters will be counted as part of any substring
+of _string_.  When `NIL` the sign is applied to the parsed number,
+but the magnitude of the parsed number will be the same as if it were
+unsigned.
+
 Examples:
 
     (parse-decimal-number "0.2")  => 1/5
@@ -282,6 +288,12 @@ Examples:
                           :negative-sign #\−)
     => -2469/200
 
+	(parse-decimal-number "-1234" :start 0 :end 2) => -1
+	(parse-decimal-number "1234" :start 0 :end 2) => 12
+	(parse-decimal-number "-1234"
+                          :start 0
+                          :end 2
+						  :subseq-include-sign nil) => -12
 
 ### Function: `round-half-away-from-zero`
 

@@ -392,14 +392,17 @@ Examples:
 
   (setf string (string-trim " " string))
   (assert (plusp (length string)) (string) 'decimal-parse-error)
-  (let ((sign 1))
+  (let ((sign 1)
+	(sign-char? (char string 0)))
+    (when (char= sign-char? negative-sign)
+      (setf sign -1))
     (setf string
-	  (cond ((char= (char string 0) negative-sign)
-		 (setf sign -1)
-		 (subseq string 1 (if subseq-include-sign end (1+ end))))
-		((char= (char string 0) positive-sign)
-		 (subseq string 1 (if subseq-include-sign end (1+ end))))
-		(t (subseq string start end))))
+	  (if (or (char= sign-char? negative-sign)
+		  (char= sign-char? positive-sign))
+	      (if subseq-include-sign
+		  (subseq string (if (= 0 start) 1 start) end)
+		  (subseq string (1+ start) (when end (1+ end))))
+	      (subseq string start end)))
 
     (if (and (every (lambda (item)
 		      (or (digit-char-p item)
