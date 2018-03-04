@@ -362,7 +362,8 @@ couldn't parse a decimal number from string."))
                              (decimal-separator #\.)
                              (positive-sign #\+)
                              (negative-sign #\-)
-                             (start 0) (end nil))
+			     (start 0) (end nil)
+			     (subseq-include-sign t))
 
   "Examine _string_ (or its substring from _start_ to _end_) for a
 decimal number. Assume that the decimal number is exact and return it as
@@ -389,31 +390,34 @@ Examples:
                           :negative-sign #\\−)
     => -2469/200"
 
-  (setf string (string-trim " " (subseq string start end)))
-  (if (not (plusp (length string)))
-      (error 'decimal-parse-error)
-      (let ((sign 1))
-        (cond ((char= (aref string 0) negative-sign)
-               (setf sign -1
-                     string (subseq string 1)))
-              ((char= (aref string 0) positive-sign)
-               (setf string (subseq string 1))))
+  (assert (plusp (length string)) (string) 'decimal-parse-error)
 
-        (if (and (every (lambda (item)
-                          (or (digit-char-p item)
-                              (char= item decimal-separator)))
-                        string)
-                 (some #'digit-char-p string)
-                 (<= 0 (count decimal-separator string) 1))
+  (setf string (string-trim " " string))
 
-            (let ((pos (position decimal-separator string)))
-              (* sign
-                 (+ (or (number-string-to-integer (subseq string 0 pos))
-                        0)
-                    (if pos
-                        (or (number-string-to-fractional
-                             (subseq string (1+ pos)))
-                            0)
-                        0))))
+  (let ((sign 1))
+    (setf string
+	  (cond ((char= (char string 0) negative-sign)
+		 (setf sign -1)
+		 (subseq string 1 (if subseq-include-sign end (1+ end))))
+		((char= (char string 0) positive-sign)
+		 (subseq string 1 (if subseq-include-sign end (1+ end))))
+		(t (subseq string start end))))
 
-            (error 'decimal-parse-error)))))
+    (if (and (every (lambda (item)
+		      (or (digit-char-p item)
+			  (char= item decimal-separator)))
+		    string)
+	     (some #'digit-char-p string)
+	     (<= 0 (count decimal-separator string) 1))
+
+	(let ((pos (position decimal-separator string)))
+	  (* sign
+	     (+ (or (number-string-to-integer (subseq string 0 pos))
+		    0)
+		(if pos
+		    (or (number-string-to-fractional
+			 (subseq string (1+ pos)))
+			0)
+		    0))))
+
+	(error 'decimal-parse-error))))
