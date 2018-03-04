@@ -362,8 +362,8 @@ couldn't parse a decimal number from string."))
                              (decimal-separator #\.)
                              (positive-sign #\+)
                              (negative-sign #\-)
-			     (start 0) (end nil)
-			     (subseq-include-sign t))
+                             (start 0) (end nil)
+                             (subseq-include-sign t))
 
   "Examine _string_ (or its substring from _start_ to _end_) for a
 decimal number. Assume that the decimal number is exact and return it as
@@ -390,10 +390,8 @@ Examples:
                           :negative-sign #\\−)
     => -2469/200"
 
-  (assert (plusp (length string)) (string) 'decimal-parse-error)
-
   (setf string (string-trim " " string))
-
+  (assert (plusp (length string)) (string) 'decimal-parse-error)
   (let ((sign 1))
     (setf string
 	  (cond ((char= (char string 0) negative-sign)
