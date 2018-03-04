@@ -293,7 +293,7 @@ Examples:
 	(parse-decimal-number "-1234"
                           :start 0
                           :end 2
-						  :subseq-include-sign nil) => -12
+                          :subseq-include-sign nil) => -12
 
 ### Function: `round-half-away-from-zero`
 
