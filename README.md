@@ -255,7 +255,7 @@ below. The default value is in parentheses.
 The lambda list:
 
      (string &key (decimal-separator #\.) (positive-sign #\+)
-             (negative-sign #\-) (start 0) (end nil))
+             (negative-sign #\-) (start 0) (end nil) (subseq-include-sign t)
 
 Examine _string_ (or its substring from _start_ to _end_) for a
 decimal number. Assume that the decimal number is exact and return it as
