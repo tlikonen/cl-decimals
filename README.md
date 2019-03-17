@@ -11,8 +11,9 @@ This Common Lisp package offers functions for parsing and formatting
 decimal numbers. Package's main interface are functions
 `parse-decimal-number` and `format-decimal-number`. The former is for
 parsing strings for decimal numbers and the latter for pretty-printing
-them as strings. See _Interface (API)_ for the full documentation of the
-public programming interface. Here are some examples.
+them as strings. See section _The Programming Interface)_ for the full
+documentation of the public programming interface. Here are some
+examples.
 
 
 ### Parsing
@@ -73,24 +74,23 @@ public programming interface. Here are some examples.
     NIL
 
 
-Author and license
-------------------
+License and Source Code
+-----------------------
 
-Author:  Teemu Likonen <<tlikonen@iki.fi>>
+Author: Teemu Likonen <<tlikonen@iki.fi>>
 
 PGP: [4E10 55DC 84E9 DFF6 13D7 8557 719D 69D3 2453 9450][PGP]
 
-License: Public domain
+License: [Creative Commons CC0][CC0] (public domain dedication)
 
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+The source code repository: <https://github.com/tlikonen/cl-decimals>
 
 [PGP]: http://www.iki.fi/tlikonen/pgp-key.asc
+[CC0]: https://creativecommons.org/publicdomain/zero/1.0/legalcode
 
 
-Interface (API)
----------------
+The Programming Interface
+-------------------------
 
 ### Condition: `decimal-parse-error`
 
