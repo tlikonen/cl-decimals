@@ -98,55 +98,6 @@ Function `parse-decimal-number` signals this condition when it
 couldn't parse a decimal number from string.
 
 
-### Macro: `define-decimal-formatter`
-
-The lambda list:
-
-     (name &body keyword-arguments)
-
-Define a decimal number formatter function to use with the `~/`
-directive of `cl:format`. The valid format is this:
-
-    (define-decimal-formatter name
-      (:keyword form)
-      ...)
-
-_Name_ is the symbol that names the function. _Keyword_ must be a valid
-keyword argument for the `format-decimal-number` function (see its
-documentation for more information). _Form_ is evaluated and the value
-is used with the _keyword_ argument. Macro's side effect is that global
-function _name_ is defined. It can be used with the `~/` directive of
-`cl:format` function.
-
-Examples:
-
-    (define-decimal-formatter my-formatter
-      (:round-magnitude -6)
-      (:decimal-separator ",")
-      (:integer-group-separator " ")
-      (:integer-minimum-width 4)
-      (:fractional-group-separator " ")
-      (:fractional-minimum-width 10)
-      (:show-trailing-zeros t))
-    => MY-FORMATTER
-
-    (format nil "~/my-formatter/" 10/6)
-    => "   1,666 667  "
-
-    (format nil "~/my-formatter/" 100/8)
-    => "  12,500 000  "
-
-The `~/` directive function call can optionally take up to three
-arguments to override the defaults:
-
-    ~round-magnitude,integer-minimum-width,fractional-minimum-width/FUNCTION/
-
-For example:
-
-    (format nil "~-2,3,4/my-formatter/" 10/6)
-    => "  1,67 "
-
-
 ### Function: `format-decimal-number`
 
 The lambda list:
@@ -301,5 +252,54 @@ an even integer when number is exactly between two integers. Examples:
 
     (round-half-away-from-zero 5/2) => 3, -1/2
     (round 5/2)                     => 2, 1/2
+
+
+### Macro: `define-decimal-formatter`
+
+The lambda list:
+
+     (name &body keyword-arguments)
+
+Define a decimal number formatter function to use with the `~/`
+directive of `cl:format`. The valid format is this:
+
+    (define-decimal-formatter name
+      (:keyword form)
+      ...)
+
+_Name_ is the symbol that names the function. _Keyword_ must be a valid
+keyword argument for the `format-decimal-number` function (see its
+documentation for more information). _Form_ is evaluated and the value
+is used with the _keyword_ argument. Macro's side effect is that global
+function _name_ is defined. It can be used with the `~/` directive of
+`cl:format` function.
+
+Examples:
+
+    (define-decimal-formatter my-formatter
+      (:round-magnitude -6)
+      (:decimal-separator ",")
+      (:integer-group-separator " ")
+      (:integer-minimum-width 4)
+      (:fractional-group-separator " ")
+      (:fractional-minimum-width 10)
+      (:show-trailing-zeros t))
+    => MY-FORMATTER
+
+    (format nil "~/my-formatter/" 10/6)
+    => "   1,666 667  "
+
+    (format nil "~/my-formatter/" 100/8)
+    => "  12,500 000  "
+
+The `~/` directive function call can optionally take up to three
+arguments to override the defaults:
+
+    ~round-magnitude,integer-minimum-width,fractional-minimum-width/FUNCTION/
+
+For example:
+
+    (format nil "~-2,3,4/my-formatter/" 10/6)
+    => "  1,67 "
 
 
