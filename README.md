@@ -79,7 +79,7 @@ License and Source Code
 
 Author: Teemu Likonen <<tlikonen@iki.fi>>
 
-PGP: [4E10 55DC 84E9 DFF6 13D7 8557 719D 69D3 2453 9450][PGP]
+OpenPGP key: [4E10 55DC 84E9 DFF6 13D7 8557 719D 69D3 2453 9450][PGP]
 
 License: [Creative Commons CC0][CC0] (public domain dedication)
 
