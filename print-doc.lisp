@@ -1,3 +1,8 @@
+;; Author: Teemu Likonen <tlikonen@iki.fi>
+;;
+;; License: Creative Commons CC0 (public domain dedication)
+;; https://creativecommons.org/publicdomain/zero/1.0/legalcode
+
 (defpackage #:print-doc
   (:use #:cl)
   (:export #:print-doc))
@@ -27,20 +32,21 @@
     :with *package* := (find-package package)
     :with *print-right-margin* := 72
     :with *print-case* := :downcase
-    :with symbols := (loop :for symbol
-                             :being :each :external-symbol :in package
-                           :collect symbol)
+    :with symbols
+      := (sort (mapcan #'symbol-doc-type
+                       (loop :for symbol
+                               :being :each :external-symbol :in package
+                             :collect symbol))
+               (lambda (l1 l2)
+                 (let ((s1 (symbol-name (first l1)))
+                       (s2 (symbol-name (first l2)))
+                       (t1 (symbol-name (second l1)))
+                       (t2 (symbol-name (second l2))))
+                   (or (string-lessp t1 t2)
+                       (and (string-equal t1 t2)
+                            (string-lessp s1 s2))))))
 
-    :for (symbol type doc)
-      :in (sort (mapcan #'symbol-doc-type symbols)
-                (lambda (l1 l2)
-                  (let ((s1 (symbol-name (first l1)))
-                        (s2 (symbol-name (first l2)))
-                        (t1 (symbol-name (second l1)))
-                        (t2 (symbol-name (second l2))))
-                    (or (string-lessp t1 t2)
-                        (and (string-equal t1 t2)
-                             (string-lessp s1 s2))))))
+    :for (symbol type doc) :in symbols
 
     :if doc :do
 
