@@ -32,11 +32,10 @@
     :with *package* := (find-package package)
     :with *print-right-margin* := 72
     :with *print-case* := :downcase
-    :with symbols
-      := (sort (mapcan #'symbol-doc-type
-                       (loop :for symbol
-                               :being :each :external-symbol :in package
-                             :collect symbol))
+    :with data
+      := (sort (loop :for symbol
+                       :being :each :external-symbol :in package
+                     :append (symbol-doc-type symbol))
                (lambda (l1 l2)
                  (let ((s1 (symbol-name (first l1)))
                        (s2 (symbol-name (first l2)))
@@ -46,7 +45,7 @@
                        (and (string-equal t1 t2)
                             (string-lessp s1 s2))))))
 
-    :for (symbol type doc) :in symbols
+    :for (symbol type doc) :in data
 
     :if doc :do
 
