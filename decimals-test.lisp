@@ -67,6 +67,15 @@
                        'decimals:decimal-parse-error)))
 
 
+(defun parse-error-reader-function ()
+  (equal '("" "" "abc" "a b c" "+" "-" "1a" "+1a" "-1a")
+         (loop :for input :in '("" " " "  abc  " " a b c " "+  " "   -"
+                                "1a" "+1a" "-1a")
+               :collect (handler-case (decimals:parse-decimal-number input)
+                          (error (c)
+                            (decimals:decimal-parse-error-string c))))))
+
+
 (defun rounding-function ()
   (loop :for (number divisor quotient remainder)
         :in '((1/2 1 1 -1/2)
@@ -215,6 +224,7 @@
     (rounding-function)
     (parse-decimal)
     (parse-decimal-illegal)
+    (parse-error-reader-function)
     (format-decimal-round-magnitude)
     (format-decimal-align)
     (format-decimal-trailing-zeros)
