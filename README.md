@@ -95,7 +95,9 @@ The Programming Interface
 ### Condition: `decimal-parse-error`
 
 Function `parse-decimal-number` signals this condition when it
-couldn't parse a decimal number from string.
+couldn't parse a decimal number from string. Function
+`decimal-parse-error-string` can be used to read the input string from
+the condition object.
 
 
 ### Function: `format-decimal-number`
@@ -218,8 +220,11 @@ _negative-sign_ character. The latter causes this function to assume a
 negative number. The following characters in the string must include one
 or more digit characters and it may include one _decimal-separator_
 character which separates integer and fractional parts. All other
-characters are illegal. If these rules are not met a
-`decimal-parse-error` condition is signaled.
+characters are illegal.
+
+If the parsing rules are not met a `decimal-parse-error` condition is
+signaled. Function `decimal-parse-error-string` can be used to read the
+string from the condition object.
 
 Examples:
 

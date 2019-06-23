@@ -11,6 +11,7 @@
            #:format-decimal-number
            #:parse-decimal-number
            #:decimal-parse-error
+           #:decimal-parse-error-string
            #:define-decimal-formatter))
 
 (in-package #:decimals)
@@ -346,18 +347,21 @@ For example:
 
 
 (define-condition decimal-parse-error (parse-error)
-  nil
-  (:report "Not a valid decimal number string.")
+  ((string :reader decimal-parse-error-string :initarg :string))
+  (:report (lambda (condition stream)
+             (format stream "Invalid decimal number string: \"~A\"."
+                     (decimal-parse-error-string condition))))
   (:documentation
    "Function `parse-decimal-number` signals this condition when it
-couldn't parse a decimal number from string."))
+couldn't parse a decimal number from string. Function
+`decimal-parse-error-string` can be used to read the input string from
+the condition object."))
 
 
-(defun parse-decimal-number (string &key
-                             (decimal-separator #\.)
-                             (positive-sign #\+)
-                             (negative-sign #\-)
-                             (start 0) (end nil))
+(defun parse-decimal-number (string &key (decimal-separator #\.)
+                                      (positive-sign #\+)
+                                      (negative-sign #\-)
+                                      (start 0) (end nil))
 
   "Examine _string_ (or its substring from _start_ to _end_) for a
 decimal number. Assume that the decimal number is exact and return it as
@@ -369,8 +373,11 @@ _negative-sign_ character. The latter causes this function to assume a
 negative number. The following characters in the string must include one
 or more digit characters and it may include one _decimal-separator_
 character which separates integer and fractional parts. All other
-characters are illegal. If these rules are not met a
-`decimal-parse-error` condition is signaled.
+characters are illegal.
+
+If the parsing rules are not met a `decimal-parse-error` condition is
+signaled. Function `decimal-parse-error-string` can be used to read the
+string from the condition object.
 
 Examples:
 
@@ -385,30 +392,31 @@ Examples:
     => -2469/200"
 
   (setf string (string-trim " " (subseq string start end)))
-  (if (not (plusp (length string)))
-      (error 'decimal-parse-error)
-      (let ((sign 1))
-        (cond ((char= (aref string 0) negative-sign)
-               (setf sign -1
-                     string (subseq string 1)))
-              ((char= (aref string 0) positive-sign)
-               (setf string (subseq string 1))))
+  (let ((input string))
+    (if (not (plusp (length string)))
+        (error 'decimal-parse-error :string input)
+        (let ((sign 1))
+          (cond ((char= (aref string 0) negative-sign)
+                 (setf sign -1
+                       string (subseq string 1)))
+                ((char= (aref string 0) positive-sign)
+                 (setf string (subseq string 1))))
 
-        (if (and (every (lambda (item)
-                          (or (digit-char-p item)
-                              (char= item decimal-separator)))
-                        string)
-                 (some #'digit-char-p string)
-                 (<= 0 (count decimal-separator string) 1))
+          (if (and (every (lambda (item)
+                            (or (digit-char-p item)
+                                (char= item decimal-separator)))
+                          string)
+                   (some #'digit-char-p string)
+                   (<= 0 (count decimal-separator string) 1))
 
-            (let ((pos (position decimal-separator string)))
-              (* sign
-                 (+ (or (number-string-to-integer (subseq string 0 pos))
-                        0)
-                    (if pos
-                        (or (number-string-to-fractional
-                             (subseq string (1+ pos)))
-                            0)
-                        0))))
+              (let ((pos (position decimal-separator string)))
+                (* sign
+                   (+ (or (number-string-to-integer (subseq string 0 pos))
+                          0)
+                      (if pos
+                          (or (number-string-to-fractional
+                               (subseq string (1+ pos)))
+                              0)
+                          0))))
 
-            (error 'decimal-parse-error)))))
+              (error 'decimal-parse-error :string input))))))
